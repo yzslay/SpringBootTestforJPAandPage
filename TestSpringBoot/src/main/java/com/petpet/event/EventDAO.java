@@ -3,6 +3,8 @@ package com.petpet.event;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import com.petpet.bean.EventBean;
 
@@ -19,10 +21,14 @@ public class EventDAO implements IEventDAO {
 	}
 	
 	@Override
-	public  EventBean query(int eventid) {
+	public  EventBean query(int eventid) {	
+		Pageable p = PageRequest.of(0 ,5);   // of(int page, int size, Sort.Direction direction, String... properties)
+		
 		
 		return entityManager.find(EventBean.class,eventid);
+		
 	}
+	
 	@Override
 	public  EventBean insert(EventBean eventbean) {  //要在前面塞eventstatus=1,因為那個不能是空值
 		EventBean result = entityManager.find(EventBean.class, eventbean.getEventID());

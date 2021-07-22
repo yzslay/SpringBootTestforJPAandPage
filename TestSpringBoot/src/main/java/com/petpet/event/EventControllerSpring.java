@@ -21,7 +21,7 @@ public class EventControllerSpring {
 	
 	@RequestMapping(path={"/queryallevent.controller","/"}, method = {RequestMethod.POST,RequestMethod.GET})
 	public String listAllEvents(Model m) {
-		List<EventBean> event = EventService.queryall();
+		List<EventBean> event = EventService.queryallpage();
 		m.addAttribute("events", event);
 		return 	"event/getallevent";
 	}

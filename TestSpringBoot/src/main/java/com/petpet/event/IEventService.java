@@ -10,4 +10,5 @@ public interface  IEventService {
 	public EventBean insert(EventBean EventBean);
 	public EventBean update(EventBean eventbean);
 	public EventBean delete(int eventid);
+	public List<EventBean> queryallpage();
 }
