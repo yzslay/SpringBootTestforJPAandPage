@@ -38,7 +38,7 @@ public class ProductBean {
 	@Column(name = "productprice", nullable = false)
 	private double productPrice;
 	@Lob
-	@Column(name = "productimagege", nullable = true)
+	@Column(name = "productimage", nullable = true)
 	private byte[] productImage;
 	
 	@Column(name = "createtime", nullable = false)
