@@ -16,24 +16,26 @@ public class ProductService  implements IProductService{
 	private ProductRepository productRepository;
 	
 	@Override
-	public void saveProductBean(ProductBean product) {
-		productRepository.save(product);	
+	public void saveProductBean(ProductBean product) { 
+		productRepository.save(product);	 // 由於在ProductRepository有繼承JpaRepository方法，這邊就可以直接使用方法
 	}
 
 	@Override
 	public List<ProductBean> getAllActiveProducts() {
-		return productRepository.findAll();
+		return productRepository.findAll();  // 由於在ProductRepository有繼承JpaRepository方法，這邊就可以直接使用方法
 	}
 
 	@Override
 	public Optional<ProductBean> getProductById(int id) {
-		return productRepository.findById(id);
+		return productRepository.findById(id); // 由於在ProductRepository有繼承JpaRepository方法，這邊就可以直接使用方法
 	}
 	
 	@Override
 	public void deleteProduct(int id) {
-		productRepository.deleteById(id);	
+		productRepository.deleteById(id);	// 由於在ProductRepository有繼承JpaRepository方法，這邊就可以直接使用方法
 	}
+	
+	
 
 
 }

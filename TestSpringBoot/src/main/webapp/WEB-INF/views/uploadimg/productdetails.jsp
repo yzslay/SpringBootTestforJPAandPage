@@ -44,7 +44,7 @@
 						</p>
 					</div><br>
 					<a href="${pageContext.request.contextPath}/product/show">Go Back</a>
-					&emsp;<a href="${pageContext.request.contextPath}/">Go Home</a>
+					&emsp;<a href="${pageContext.request.contextPath}/upload">Go Home</a>
 				</div>
 			</div>
 		</div>

@@ -18,7 +18,7 @@ import lombok.ToString;
 
 
 
-@ToString
+@ToString  // 使用了Lombok，試作，請不要學習
 @Setter 
 @Getter
 @Entity

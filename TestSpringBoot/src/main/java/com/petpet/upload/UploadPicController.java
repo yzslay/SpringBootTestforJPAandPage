@@ -34,15 +34,15 @@ import com.petpet.bean.ProductBean;
 @Controller
 public class UploadPicController {
 	
-	@Value("${uploadDir}")  // 從application,properties 裡獲得路徑，就是/resources之下
+	@Value("${uploadDir}")  // 從application,properties 裡獲得圖片路徑，resources之下
 	private String uploadFolder;
 	
 	@Autowired
-	private ProductService productService;
+	private ProductService productService; //不用new物件很棒
 	
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());  
 	
-	@RequestMapping(path="/upload", method = {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(path="/upload", method = {RequestMethod.POST,RequestMethod.GET})  // 首頁位置
 	public String uploadindex(Model m) {
 		
 		return "uploadimg/uploadindex";
@@ -51,12 +51,12 @@ public class UploadPicController {
 	}
 	
 	
-	@RequestMapping(path="/uploadfile", method = {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(path="/uploadfile", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> uploadproduct (@RequestParam("name") String name,
 			@RequestParam("price") double price, @RequestParam("description") String description, Model model, HttpServletRequest request
 			,final @RequestParam("image") MultipartFile file){
 	try {
-		String uploadDirectory = request.getServletContext().getRealPath(uploadFolder);  // 找到上傳路徑
+		String uploadDirectory = request.getServletContext().getRealPath(uploadFolder);  // 瀏覽器的上傳路徑，這邊要注意沒有對Linux作修正，要的話要再改
 		log.info("uploadDirectory:: " + uploadDirectory);
 		
 		String fileName = file.getOriginalFilename();   // 找到原始檔案名稱
@@ -65,7 +65,7 @@ public class UploadPicController {
 		log.info("FileName: " + file.getOriginalFilename());
 		
 		
-		if (fileName == null || fileName.contains("..")) {   // 查看檔案名稱是否錯誤，這個可能要再改
+		if (fileName == null || fileName.contains("..")) {   // 查看檔案名稱是否錯誤，這個可能要再改，避免給出不是圖檔的東西
 			model.addAttribute("invalid", "Sorry! Filename contains invalid path sequence \" + fileName");
 			return new ResponseEntity<>("Sorry! Filename contains invalid path sequence " + fileName, HttpStatus.BAD_REQUEST);
 		}
@@ -75,16 +75,17 @@ public class UploadPicController {
 			File dir = new File(uploadDirectory);  // 從這邊開始開啟檔案，剛剛的檔案路徑在上方已經列印過了，檢查一下是不是正確
 			if (!dir.exists()) {
 				log.info("Folder Created");
-				dir.mkdirs();
+				dir.mkdirs();   
 			}
-			// Save the file locally
+			//就儲存到file物件...反正要再研究一下
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filePath)));
-			stream.write(file.getBytes());
+			stream.write(file.getBytes()); 
 			stream.close();
 		} catch (Exception e) {
 			log.info("in catch");
 			e.printStackTrace();
 		}
+		// file轉換成byte物件
 		byte[] imageData = file.getBytes();
 		ProductBean product = new ProductBean();
 		product.setProductName(name);
@@ -103,7 +104,7 @@ public class UploadPicController {
 		}
 	}
 	
-	@GetMapping("/product/display/{id}")
+	@GetMapping("/product/display/{id}")  // 用來匯出資料庫的圖片
 	@ResponseBody
 	public void showImage(@PathVariable("id") int id, HttpServletResponse response, Optional<ProductBean> product) throws ServletException, IOException {
 		log.info("Id :: " + id);
@@ -113,8 +114,8 @@ public class UploadPicController {
 		response.getOutputStream().close();
 	}
 	
-	@GetMapping("/product/productdetails")
-	String showProductDetails(@RequestParam("id") int id, Optional<ProductBean> product, Model model) {
+	@GetMapping("/product/productdetails")   // 找尋產品明細 ，尚未實作
+	public String showProductDetails(@RequestParam("id") int id, Optional<ProductBean> product, Model model) {
 		try {
 			log.info("Id :: " + id);
 			if (id != 0) {
@@ -128,7 +129,7 @@ public class UploadPicController {
 					model.addAttribute("price", product.get().getProductPrice());
 					return "productdetails";
 				}
-				return "redirect:/home";
+				return "redirect:/home";  
 			}
 		return "redirect:/home";
 		} catch (Exception e) {
@@ -137,9 +138,33 @@ public class UploadPicController {
 		}	
 	}
 	
+	@GetMapping("/productdelete")   // 產品刪除
+	public String deleteProductDetails(@RequestParam("id") int id, HttpServletResponse response,Model model) {
+		try {
+			log.info("Id :: " + id);
+			if (id != 0) {
+			Optional<ProductBean> product = productService.getProductById(id);
+				System.out.println("moo");
+				log.info("products :: " + product);
+				if (product.isPresent()) {
+					model.addAttribute("id", product.get().getProductId());
+					model.addAttribute("description", product.get().getProductDescription());
+					model.addAttribute("name", product.get().getProductPrice());
+					model.addAttribute("price", product.get().getProductPrice());
+					productService.deleteProduct(id);
+					return "redirect:/uploadimg/products";
+				}
+				return "redirect:/home";  
+			}
+		return "redirect:/home";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:/home";
+		}	
+	}
 
-	@GetMapping("/product/show")
-	String show(Model map) {
+	@GetMapping("/product/show")    // 找尋所有產品 
+	public String show(Model map) {
 		List<ProductBean> products = productService.getAllActiveProducts();
 		map.addAttribute("products", products);
 		return "uploadimg/products";
