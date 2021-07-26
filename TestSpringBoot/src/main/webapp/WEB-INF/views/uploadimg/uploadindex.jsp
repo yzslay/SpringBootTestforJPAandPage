@@ -121,7 +121,7 @@ $(document).ready(function() {
     $("#submit").on("click", function() {
     	$("#submit").prop("disabled", true);//上傳一次
     	var name = $("#name").val();
-        var file = $("#image").val(); 
+        var file = $("#imageupload").val(); 
         var price = $("#price").val();
         var description = $("#description").val();
         var form = $("#form").serialize();

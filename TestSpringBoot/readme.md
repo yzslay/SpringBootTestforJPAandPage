@@ -8,8 +8,9 @@
 2. 圖片上傳(含預覽)至資料庫，查詢時再連結Controller匯出至Resouce資料夾下讀取檔案(路徑變數)，最後利用HttpServletResponse response回傳至JSP
 3. 上傳檔案部分使用Jquery實作Ajax新增
 4. Jquery Data Table plug in實作
-5. 待增加 AJAX 刪除修改明細...應該吧，怎麼做啊
-6. 其他小地方自己看啦有備註
+5. 刪除寫完AJAX
+6. 修改+查詢寫完
+其他小地方自己看啦有備註
 起始路徑為
 http://localhost:7070/petpet/upload
 

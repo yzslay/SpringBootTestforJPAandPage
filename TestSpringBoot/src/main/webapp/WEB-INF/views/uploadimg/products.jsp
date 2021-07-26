@@ -15,7 +15,6 @@
     max-height:80px;
 }
 </style>
-
 </head>
 <body>
 <br>
@@ -50,8 +49,10 @@
                 <td>${product.productPrice}</td>
                 <!-- fmt:formatDate  標簽用於以各種不同的方式格式化日期,就是後台傳過來的會改-->
                 <td><fmt:formatDate pattern="dd-MMM-yyyy" value="${product.createTime}" /></td>
-                <td ><a href="${pageContext.request.contextPath}/product/productdetails?id=${product.productId}" class="btn btn-info text-right" target="_blank">View</a>
-                <button type="button" class="btn btn-danger danger" value=${product.productId} >Delete</button>
+                <td>
+                <button type="button" class="btn btn-info update" value=${product.productId} >修改</button>
+                <!-- <td ><a href="${pageContext.request.contextPath}/product/productdetails?id=${product.productId}" class="btn btn-info text-right" target="_blank">修改</a> -->
+                <button type="button" class="btn btn-danger delete" value=${product.productId} >刪除</button>
                 </td>
             </tr>
          </c:forEach>
@@ -86,14 +87,14 @@
 
 </body>
 <script>
-
+//使用套件
 	$(document).ready(function() {
 	    $('#example').DataTable();
 	} );
 
 
-// 刪除AJAX
-$(".danger").on("click", function() {
+// 刪除AJAX送出
+$(".delete").on("click", function() {
     console.log('moo');
     var product_id= $(this).attr('value');   //找很久才找到這種基本常識....
     console.log(product_id);
@@ -115,6 +116,15 @@ $(".danger").on("click", function() {
         console.log(xhr.status); 
                         }
                     });
+})
+
+$(".update").on("click", function() {
+    console.log('moo');
+    var product_id= $(this).attr('value');   //找很久才找到這種基本常識....
+    var url = "/product/productdetails?id="+product_id
+    console.log(product_id);
+    window.open('${pageContext.request.contextPath}/product/productdetails?id='+product_id,'修改頁面',config='height=600,width=600');
+
 })
 
 </script>

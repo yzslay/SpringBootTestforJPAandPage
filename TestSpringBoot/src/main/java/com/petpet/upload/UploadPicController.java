@@ -46,10 +46,8 @@ public class UploadPicController {
 	public String uploadindex(Model m) {
 		
 		return "uploadimg/uploadindex";
-		
-		
+
 	}
-	
 	
 	@RequestMapping(path="/uploadfile", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> uploadproduct (@RequestParam("name") String name,
@@ -63,7 +61,6 @@ public class UploadPicController {
 		String filePath = Paths.get(uploadDirectory, fileName).toString();     // 匯入nio 這需要了解一下，代替原本的io
 		
 		log.info("FileName: " + file.getOriginalFilename());
-		
 		
 		if (fileName == null || fileName.contains("..")) {   // 查看檔案名稱是否錯誤，這個可能要再改，避免給出不是圖檔的東西
 			model.addAttribute("invalid", "Sorry! Filename contains invalid path sequence \" + fileName");
@@ -125,21 +122,84 @@ public class UploadPicController {
 				if (product.isPresent()) {
 					model.addAttribute("id", product.get().getProductId());
 					model.addAttribute("description", product.get().getProductDescription());
-					model.addAttribute("name", product.get().getProductPrice());
+					model.addAttribute("name", product.get().getProductName());
 					model.addAttribute("price", product.get().getProductPrice());
-					return "productdetails";
+					return "/uploadimg/productdetails";
 				}
-				return "redirect:/home";  
+				return "redirect:/upload";  
 			}
 		return "redirect:/home";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "redirect:/home";
+			return "redirect:/upload";
 		}	
 	}
 	
+	@RequestMapping(path="/updatefile", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<?> upldateproduct (@RequestParam("name") String name, @RequestParam("id") int id,
+			@RequestParam("price") double price, @RequestParam("description") String description, Model model, HttpServletRequest request
+			,final @RequestParam(value="image",  required = false) MultipartFile file){
+		try {
+			System.out.println("有沒有檔案"+file);
+			String fileName1 = file.getOriginalFilename();
+			System.out.println("有沒有檔案名稱"+fileName1);
+			if (! file.isEmpty()) {   // 檔案不為空才讀取檔案，否則就用原本資料庫裏面的檔案
+			
+				String uploadDirectory = request.getServletContext().getRealPath(uploadFolder);  // 瀏覽器的上傳路徑，這邊要注意沒有對Linux作修正，要的話要再改
+				log.info("uploadDirectory:: " + uploadDirectory);
+				
+				String fileName = file.getOriginalFilename();   // 找到原始檔案名稱
+				String filePath = Paths.get(uploadDirectory, fileName).toString();     // 匯入nio 這需要了解一下，代替原本的io
+		
+				log.info("FileName: " + file.getOriginalFilename());
+				
+				if (fileName == null || fileName.contains("..")) {   // 查看檔案名稱是否錯誤，這個可能要再改，避免給出不是圖檔的東西
+					model.addAttribute("invalid", "Sorry! Filename contains invalid path sequence \" + fileName");
+					return new ResponseEntity<>("Sorry! Filename contains invalid path sequence " + fileName, HttpStatus.BAD_REQUEST);
+				}
+				
+				try {
+					File dir = new File(uploadDirectory);  // 從這邊開始開啟檔案，剛剛的檔案路徑在上方已經列印過了，檢查一下是不是正確
+					if (!dir.exists()) {
+						log.info("Folder Created");
+						dir.mkdirs();
+					}
+					}catch (Exception e) {
+						log.info("in catch");
+						e.printStackTrace();
+					}
+				}
+			Date createDate = new Date();  //變成是現在的修改時間匯入
+
+			ProductBean product = productService.getProductById(id).orElse(null);
+				
+			byte[] imageData1= product.getProductImage();
+			
+			product.setProductImage(imageData1);
+			System.out.println("這裡是image:"+imageData1);
+			//檔案不為空才讀取檔案，否則就用原本資料庫裏面的檔案
+			if (!file.isEmpty()) {	
+				byte[] imageData = file.getBytes();
+				product.setProductImage(imageData);
+			}
+			product.setProductName(name);
+			product.setProductPrice(price);
+			product.setProductDescription(description);
+			product.setCreateTime(createDate);
+			productService.saveProductBean(product);
+			log.info("HttpStatus===" + new ResponseEntity<>(HttpStatus.OK));
+			return new ResponseEntity<>("Product Saved With File", HttpStatus.OK);
+		}	
+		
+		catch (Exception e) {
+			e.printStackTrace();
+			log.info("Exception: " + e);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+		}
+
 	@GetMapping("/productdelete")   // 產品刪除
-	public String deleteProductDetails(@RequestParam("id") int id, HttpServletResponse response,Model model) {
+	public ResponseEntity<?> deleteProductDetails(@RequestParam("id") int id, HttpServletResponse response,Model model) {
 		try {
 			log.info("Id :: " + id);
 			if (id != 0) {
@@ -152,14 +212,14 @@ public class UploadPicController {
 					model.addAttribute("name", product.get().getProductPrice());
 					model.addAttribute("price", product.get().getProductPrice());
 					productService.deleteProduct(id);
-					return "redirect:/uploadimg/products";
+					return new ResponseEntity<>("Delete Sucess", HttpStatus.OK);
 				}
-				return "redirect:/home";  
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);  
 			}
-		return "redirect:/home";
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "redirect:/home";
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}	
 	}
 
