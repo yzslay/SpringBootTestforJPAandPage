@@ -92,7 +92,7 @@
 	} );
 
 
-// 準備來寫修改刪除AJAX
+// 刪除AJAX
 $(".danger").on("click", function() {
     console.log('moo');
     var product_id= $(this).attr('value');   //找很久才找到這種基本常識....
@@ -106,8 +106,9 @@ $(".danger").on("click", function() {
         success: function(data, statusText, xhr) {  //	請求成功時執行函式,  前面新增的FormData物件放在第一個 ，第二個我不知道，第三個XMLHttpRequest(XHR) 物件發送
         console.log(xhr.status);
             if(xhr.status == "200") {
-                alert("修改成功")
-                window.open('/html/delete.html','刪除成功',config='height=300,width=300');
+                alert("刪除成功")
+                window.open('${pageContext.request.contextPath}/html/delete.html','刪除成功',config='height=300,width=300');
+                // location.reload(); 重新讀取
                          }	   
                         },
         error: function(e) {

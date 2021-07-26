@@ -119,7 +119,7 @@ $(document).ready(function() {
     $('#loader').hide();
 
     $("#submit").on("click", function() {
-    	$("#submit").prop("disabled", true);
+    	$("#submit").prop("disabled", true);//上傳一次
     	var name = $("#name").val();
         var file = $("#image").val(); 
         var price = $("#price").val();
@@ -171,8 +171,9 @@ $(document).ready(function() {
                         	$("#form")[0].reset();
                         	$('#success').css('display','block');
                             $("#error").text("");
-                            $("#success").html("Product Inserted Succsessfully.");
-                            $('#success').delay(2000).fadeOut('slow');
+                            $("#success").html("Product Inserted Succsessfully."); //錯誤訊息
+                            $('#success').delay(5000).fadeOut('slow');
+                            // setTimeout( "self.location.reload(); ",5000);  // Reload或轉到其他頁面
                          }	   
                         },
                         error: function(e) {
