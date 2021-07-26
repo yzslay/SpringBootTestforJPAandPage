@@ -127,10 +127,7 @@ $(document).ready(function() {
         var form = $("#form").serialize();
         // 利用JS的FormData格式來序列化(serialize) input 當中的 name 與 file ，才可以用AJAX方式進行檔案上傳
     	var data = new FormData($("#form")[0]);
-        //  追加新值到 FormData 物件已有的對應鍵上；若該鍵不存在，則為其追加新的鍵
-    	data.append('name', name);
-    	data.append('price', price);
-    	data.append('description', description); 
+        
     	//alert(data);
         $('#loader').show();
         //如果表格內input的四個如果有空的話，顯示下面的CSS格式，把Submit鎖住，Loader藏起來，邊框改為紅色，Error messgae跳出字串
