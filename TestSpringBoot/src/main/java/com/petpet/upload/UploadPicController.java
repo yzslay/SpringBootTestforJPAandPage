@@ -54,45 +54,54 @@ public class UploadPicController {
 			@RequestParam("price") double price, @RequestParam("description") String description, Model model, HttpServletRequest request
 			,final @RequestParam("image") MultipartFile file){
 	try {
-		String uploadDirectory = request.getServletContext().getRealPath(uploadFolder);  // 瀏覽器的上傳路徑，這邊要注意沒有對Linux作修正，要的話要再改
-		log.info("uploadDirectory:: " + uploadDirectory);
-		
-		String fileName = file.getOriginalFilename();   // 找到原始檔案名稱
-		String filePath = Paths.get(uploadDirectory, fileName).toString();     // 匯入nio 這需要了解一下，代替原本的io
-		
-		log.info("FileName: " + file.getOriginalFilename());
-		
-		if (fileName == null || fileName.contains("..")) {   // 查看檔案名稱是否錯誤，這個可能要再改，避免給出不是圖檔的東西
-			model.addAttribute("invalid", "Sorry! Filename contains invalid path sequence \" + fileName");
-			return new ResponseEntity<>("Sorry! Filename contains invalid path sequence " + fileName, HttpStatus.BAD_REQUEST);
-		}
+//		String uploadDirectory = request.getServletContext().getRealPath(uploadFolder);  // 瀏覽器的上傳路徑，這邊要注意沒有對Linux作修正，要的話要再改
+//		log.info("uploadDirectory:: " + uploadDirectory);
+//		
+//		String fileName = file.getOriginalFilename();   // 找到原始檔案名稱
+//		String filePath = Paths.get(uploadDirectory, fileName).toString();     // 匯入nio 這需要了解一下，代替原本的io
+//		
+//		if(file.isEmpty()) {product.setMeventpicture(null);}else {mevent.setMeventpicture(pic.getBytes());}
+//		
+//		log.info("FileName: " + file.getOriginalFilename());
+//		
+//		if (fileName == null || fileName.contains("..")) {   // 查看檔案名稱是否錯誤，這個可能要再改，避免給出不是圖檔的東西
+//			model.addAttribute("invalid", "Sorry! Filename contains invalid path sequence \" + fileName");
+//			return new ResponseEntity<>("Sorry! Filename contains invalid path sequence " + fileName, HttpStatus.BAD_REQUEST);
+//		}
 		
 		Date createDate = new Date();  //沒有建構子會寫入現在時間
-		try {
-			File dir = new File(uploadDirectory);  // 從這邊開始開啟檔案，剛剛的檔案路徑在上方已經列印過了，檢查一下是不是正確
-			if (!dir.exists()) {
-				log.info("Folder Created");
-				dir.mkdirs();   
-			}
-			//就儲存到file物件...反正要再研究一下
-			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filePath)));
-			stream.write(file.getBytes()); 
-			stream.close();
-		} catch (Exception e) {
-			log.info("in catch");
-			e.printStackTrace();
-		}
+//		try {
+//			File dir = new File(uploadDirectory);  // 從這邊開始開啟檔案，剛剛的檔案路徑在上方已經列印過了，檢查一下是不是正確
+//			if (!dir.exists()) {
+//				log.info("Folder Created");
+//				dir.mkdirs();   
+//			}
+//			//就儲存到file物件...反正要再研究一下
+//			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filePath)));
+//			stream.write(file.getBytes()); 
+//			stream.close();
+//		} catch (Exception e) {
+//			log.info("in catch");
+//			e.printStackTrace();
+//		}
 		// file轉換成byte物件
 		byte[] imageData = file.getBytes();
 		ProductBean product = new ProductBean();
+	
 		product.setProductName(name);
+		if(file.isEmpty()) {
+			product.setProductImage(null);
+			
+		}else {
+			product.setProductImage(imageData);
+		}
 		product.setProductImage(imageData);
 		product.setProductPrice(price);
 		product.setProductDescription(description);
 		product.setCreateTime(createDate);
 		productService.saveProductBean(product);
 		log.info("HttpStatus===" + new ResponseEntity<>(HttpStatus.OK));
-		return new ResponseEntity<>("Product Saved With File - " + fileName, HttpStatus.OK);
+		return new ResponseEntity<>("Product Saved With File - ", HttpStatus.OK);
 		}
 	catch (Exception e) {
 		e.printStackTrace();
@@ -140,35 +149,35 @@ public class UploadPicController {
 			@RequestParam("price") double price, @RequestParam("description") String description, Model model, HttpServletRequest request
 			,final @RequestParam(value="image",  required = false) MultipartFile file){
 		try {
-			System.out.println("有沒有檔案"+file);
-			String fileName1 = file.getOriginalFilename();
-			System.out.println("有沒有檔案名稱"+fileName1);
-			if (! file.isEmpty()) {   // 檔案不為空才讀取檔案，否則就用原本資料庫裏面的檔案
-			
-				String uploadDirectory = request.getServletContext().getRealPath(uploadFolder);  // 瀏覽器的上傳路徑，這邊要注意沒有對Linux作修正，要的話要再改
-				log.info("uploadDirectory:: " + uploadDirectory);
-				
-				String fileName = file.getOriginalFilename();   // 找到原始檔案名稱
-				String filePath = Paths.get(uploadDirectory, fileName).toString();     // 匯入nio 這需要了解一下，代替原本的io
-		
-				log.info("FileName: " + file.getOriginalFilename());
-				
-				if (fileName == null || fileName.contains("..")) {   // 查看檔案名稱是否錯誤，這個可能要再改，避免給出不是圖檔的東西
-					model.addAttribute("invalid", "Sorry! Filename contains invalid path sequence \" + fileName");
-					return new ResponseEntity<>("Sorry! Filename contains invalid path sequence " + fileName, HttpStatus.BAD_REQUEST);
-				}
-				
-				try {
-					File dir = new File(uploadDirectory);  // 從這邊開始開啟檔案，剛剛的檔案路徑在上方已經列印過了，檢查一下是不是正確
-					if (!dir.exists()) {
-						log.info("Folder Created");
-						dir.mkdirs();
-					}
-					}catch (Exception e) {
-						log.info("in catch");
-						e.printStackTrace();
-					}
-				}
+//			System.out.println("有沒有檔案"+file);
+//			String fileName1 = file.getOriginalFilename();
+//			System.out.println("有沒有檔案名稱"+fileName1);
+//			if (! file.isEmpty()) {   // 檔案不為空才讀取檔案，否則就用原本資料庫裏面的檔案
+//			
+//				String uploadDirectory = request.getServletContext().getRealPath(uploadFolder);  // 瀏覽器的上傳路徑，這邊要注意沒有對Linux作修正，要的話要再改
+//				log.info("uploadDirectory:: " + uploadDirectory);
+//				
+//				String fileName = file.getOriginalFilename();   // 找到原始檔案名稱
+//				String filePath = Paths.get(uploadDirectory, fileName).toString();     // 匯入nio 這需要了解一下，代替原本的io
+//		
+//				log.info("FileName: " + file.getOriginalFilename());
+//				
+//				if (fileName == null || fileName.contains("..")) {   // 查看檔案名稱是否錯誤，這個可能要再改，避免給出不是圖檔的東西
+//					model.addAttribute("invalid", "Sorry! Filename contains invalid path sequence \" + fileName");
+//					return new ResponseEntity<>("Sorry! Filename contains invalid path sequence " + fileName, HttpStatus.BAD_REQUEST);
+//				}
+//				
+//				try {
+//					File dir = new File(uploadDirectory);  // 從這邊開始開啟檔案，剛剛的檔案路徑在上方已經列印過了，檢查一下是不是正確
+//					if (!dir.exists()) {
+//						log.info("Folder Created");
+//						dir.mkdirs();
+//					}
+//					}catch (Exception e) {
+//						log.info("in catch");
+//						e.printStackTrace();
+//					}
+//				}
 			Date createDate = new Date();  //變成是現在的修改時間匯入
 
 			ProductBean product = productService.getProductById(id).orElse(null);
