@@ -8,6 +8,6 @@ public interface IEventDAO {
 	public  EventBean query(int eventid);
 	public  EventBean insert(EventBean eventbean);
 	public  EventBean update(EventBean eventbean);
-	public List<EventBean> queryall();
-	public EventBean delete(int eventid);
+	public  List<EventBean> queryall();
+	public  EventBean delete(int eventid);
 }

@@ -1,3 +1,4 @@
+
 //package com.petpet.bean;
 //
 //import javax.persistence.Column;
@@ -13,7 +14,7 @@
 //
 //
 //@Entity
-//@Table(name = "member")
+//@Table(name = "mockmember")
 //@Component("memberbean")
 //public class MemberBean implements java.io.Serializable {
 //	@Transient //無視

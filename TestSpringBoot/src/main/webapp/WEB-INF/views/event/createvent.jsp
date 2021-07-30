@@ -17,17 +17,23 @@
  <!-- Latest compiled and minified CSS -->
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
  <!-- jQuery library -->
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
- <!-- Popper JS -->
- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> 
+ <script
+ src="https://code.jquery.com/jquery-3.6.0.js"
+ integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+ crossorigin="anonymous"></script>
  <!-- Latest compiled JavaScript -->
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
 
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
- <link rel="stylesheet" href="/EEIT/event/jquery-ui-1.12.1.custom/jquery-ui.min.css">
-<script src="/EEIT/event/jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
-<script src="/EEIT/event/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
- 
+
+ <script
+			  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+			  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+			  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js" integrity="sha512-RCgrAvvoLpP7KVgTkTctrUdv7C6t7Un3p1iaoPr1++3pybCyCsCZZN7QEHMZTcJTmcJ7jzexTO+eFpHk4OCFAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js" integrity="sha512-ux1VHIyaPxawuad8d1wr1i9l4mTwukRq5B3s8G3nEmdENnKF5wKfOV6MEUH0k/rNT4mFr/yL+ozoDiwhUQekTg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 <title>新增活動資料</title>
 
 <style>
@@ -74,101 +80,115 @@ height: 70px;
 </head>
 
 <body>
-    <nav>
-		<ul>
-			<li><a href="queryallevent.controller" class="href">查詢所有活動</a> 	</li>
-			<li><a href="createeevent.url" class="href">新增活動</a> 	</li>
-			<li><a href="about" class="href">about</a> 	</li>
-		</ul>
-	</nav>	
-			
+  <nav>
+  <ul>
+    <li><a href="queryallevent.controller" class="href">查詢所有活動</a> 	</li>
+    <li><a href="createeevent.url" class="href">新增活動</a> 	</li>
+    <li><a href="about" class="href">沒在用</a> 	</li>
+  </ul>
+</nav>	
+
 <div class="container anchor">
-    <form method="post" name="createvent" action="${basePath}addevent.controller">  
-      	<div class="row">
-            <div class="col">
-            活動名稱 :<br> <input type="text" class="form-control" required name="eventname"  placeholder="請輸入活動名稱"/>
-            <small  class="form-text text-muted">
-	        必填欄位
-			</small>
-            <p>  
-            </div>
-            <div class="col">
-            活動日期: <br><input type="text" class="form-control" required  name="eventdate" id="date"  placeholder="請輸入活動日期 YYYY-MM-DD" />
-            <small  class="form-text text-muted">
-	        必填欄位
-			</small>
-            <p>
-            </div>
-     	</div>
-      <div class="row">
-          <div class="col">
-          活動起始時間: <br><input type="text" size="30"  class="form-control" required name="eventstarttime"  id="date" placeholder="請輸入活動時間 YYYY-MM-DD HH:mm"/>
-          <small class="form-text text-muted">
-	      必填欄位
-		  </small>
-                   
-          <p>
-          </div>
-          <div class="col">
-          活動結束時間: <br><input type="text" size="30" class="form-control" required name="eventendtime"  placeholder="請輸入活動時間 YYYY-MM-DD HH:mm" />
-          <small class="form-text text-muted">
-	      必填欄位
-		  </small>
-          <p>
-          </div>
-      </div>  
-      <div class="row">
-          <div class="col">
-          活動地點: <br><input type="text" class="form-control" required name="eventlocation"  placeholder="請輸入活動地點" />
-          <small class="form-text text-muted">
-	      必填欄位
-		  </small><p>
-          </div>
+  <form method="post" name="submitselection" action="/petpet/addevent.controller" >  
+     <input type="hidden"  readonly name="eventid" value="${event.eventID}" />
+ 
+
+    <div class="row"> 
+      <div class="col">
+          活動名稱 :<br> <input type="text" class="form-control" required name="eventname"  />
+          <small  class="form-text text-muted">
+          必填欄位
+      </small>
+        <p>  
+        </div>
+        <div class="col form-check">
+          活動是否開啟: <br><input type="checkbox" class="form-check-input" required name="eventstatus" id="checkboxId" />
+             <small class="form-text text-muted">
+          必填欄位
+      </small>      		
+        </div>
+
       </div>
       <div class="row">
           <div class="col">
-          活動種類: <br><input type="text"  name="eventtype" class="form-control" required placeholder="請輸入活動種類" />
-          <small class="form-text text-muted">
-	      必填欄位
-		  </small>      
+          活動起始日期: <br><input type="date"  class="form-control" required  name="eventstartdate" />
+          <small id="passwordHelpBlock" class="form-text text-muted">
+          必填欄位
+      </small>
           <p>
-          </div>
-          <div class="col">
-          活動種類1: <br><input type="text"  name="eventtype1" placeholder="請輸入活動種類" /><p>
-          </div>
-          <div class="col">
-          活動種類2: <br><input type="text"  name="eventtype2" placeholder="請輸入活動種類"  /><p>
-          </div>
-          <div class="col">
-          活動種類自訂: <br><input type="text"  name="eventtypecustom"placeholder="請輸入活動種類"  /><p>
-          </div>
+        </div>
+    <div class="col">
+          活動起始時間: <br><input type="time" step="1" class="form-control" required  name="eventstarttime"  />
+          <small id="passwordHelpBlock" class="form-text text-muted">
+          必填欄位
+      </small>
+          <p>
+        </div>
+        <div class="col">
+          活動結束日期: <br><input type="date"  class="form-control" required name="eventenddate" id="date2" value ="${event.eventEnddate}" />  
+          <small id="passwordHelpBlock" class="form-text text-muted">
+          必填欄位
+      </small><p>
+        </div>
+    <div class="col">
+      活動結束時間: <br><input type="time"  step="1"  class="form-control" required name="eventendtime" value ="${event.eventEndTime}" />  
+      <small id="passwordHelpBlock" class="form-text text-muted">
+      必填欄位
+      </small><p>
+    </div>
       </div>
       <div class="row">
           <div class="col">
-          活動人數上限: <br><input type="text" class="form-control" required  name="eventmaxlimit" placeholder="請輸入活動人數" /><p>
+            活動地點: <br><input type="text" class="form-control" required  name="eventlocation" value ="${event.eventLocation}" />
+            <small id="passwordHelpBlock" class="form-text text-muted">
+          必填欄位
+      </small>
+      <p>        
           </div>
+       </div>
+        <div class="row">
           <div class="col">
-          活動費用:<br><input type="text"  name="eventfee" required placeholder="請輸入活動費用"  />
-          <small class="form-text text-muted">
-	      必填欄位
-		  </small>    
-          <p>
-          </div>
+          活動種類: <br><input type="text" class="form-control" required name="eventtype" value ="${event.eventType}"/>
+          <small id="passwordHelpBlock" class="form-text text-muted">
+          必填欄位
+      </small>
+      <p>
+           </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          活動人數上限: <br><input type="text"  class="form-control" required name="eventmaxlimit"value ="${event.eventMaxLimit}" /><p>
+      </div>
+      <div class="col">
+        活動費用:<br><input type="text"  name="eventfee"  value ="${event.eventFee}" />
+         <small class="form-text text-muted">
+       必填欄位
+     </small>  <p>
+        </div>
       </div>
       <div>
-        活動說明:<br><textarea name="eventdescribe"  placeholder="請輸入活動說明"  rows="5" cols="100"></textarea>
-   	 </div>
-        <button type="submit" class="btn btn-primary">確認</button>
-     </form>
+      活動說明:<br><textarea name="eventdescription"  rows="5" cols="50"> ${event.eventDescription} </textarea><p>
+     </div>
+      <button type="submit" class="btn btn-primary">確認</button>
+   </form>
+
 </div>
 
+共被點選${event.eventclick}次
+  
 <footer>
-	第八組組員-蕭詠謙
+第八組組員-蕭詠謙
 </footer>
-<script>
-$( "#date" ).datepicker(
-		{ dateFormat: 'yy-mm-dd' }
-		);
-</script>
+  
 </body>
+
+
+<script>
+
+
+  
+  let checkState = $("#checkboxId").is(":checked") ? "true" : "false";
+
+</script>
+
 </html>
