@@ -35,7 +35,7 @@ public class EventBean implements java.io.Serializable {
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@Column(name = "EVENTSTARTTIME",nullable = false)
-	private Timestamp eventStratTime;
+	private Timestamp eventStartTime;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@Column(name = "EVENTENDTIME" ,nullable = false)
@@ -54,9 +54,9 @@ public class EventBean implements java.io.Serializable {
 	@Column(name = "EVENTSTATUS")
 	private boolean eventStatus;
 	@Column(name = "eventdescription")
-	private String eventdescription ;
+	private String eventDescription ;
 	@Column(name = "eventclick")
-	private int eventclick ;
+	private int eventClick ;
 	public int getEventID() {
 		return eventID;
 	}
@@ -75,11 +75,11 @@ public class EventBean implements java.io.Serializable {
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
-	public Timestamp getEventStratTime() {
-		return eventStratTime;
+	public Timestamp getEventStartTime() {
+		return eventStartTime;
 	}
-	public void setEventStratTime(Timestamp eventStratTime) {
-		this.eventStratTime = eventStratTime;
+	public void setEventStartTime(Timestamp eventStartTime) {
+		this.eventStartTime = eventStartTime;
 	}
 	public Timestamp getEventEndTime() {
 		return eventEndTime;
@@ -123,17 +123,17 @@ public class EventBean implements java.io.Serializable {
 	public void setEventStatus(boolean eventStatus) {
 		this.eventStatus = eventStatus;
 	}
-	public String getEventdescription() {
-		return eventdescription;
+	public String getEventDescription() {
+		return eventDescription;
 	}
-	public void setEventdescription(String eventdescription) {
-		this.eventdescription = eventdescription;
+	public void setEventDescription(String eventDescription) {
+		this.eventDescription = eventDescription;
 	}
-	public int getEventclick() {
-		return eventclick;
+	public int getEventClick() {
+		return eventClick;
 	}
-	public void setEventclick(int eventclick) {
-		this.eventclick = eventclick;
+	public void setEventClick(int eventClick) {
+		this.eventClick = eventClick;
 	}
 	
 	

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"  import="java.util.* , com.petpet.bean.EventBean" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
     <%! @SuppressWarnings("unchecked") %>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,21 +100,31 @@ height: 70px;
 <table class="table table-hover " id="datatable">
 	<thead class="thead-dark">
 		<tr>
-			<th scope="col">活動名稱</th> <th scope="col">活動日期</th> <th scope="col">活動起始時間</th> <th scope="col">活動地點</th> 
-			<th scope="col">活動種類</th><th scope="col">活動人數上限</th> <th scope="col">活動費用</th><th scope="col" >修改</th><th scope="col">刪除</th>
+			<th scope="col">活動名稱</th> <th scope="col">活動是否開啟</th> <th scope="col">起始時間</th><th scope="col">結束時間</th>  <th scope="col">地點</th> 
+			<th scope="col">種類</th><th scope="col">人數上限</th> <th scope="col">費用</th><th>點閱次數</th><th scope="col" >修改</th><th scope="col">刪除</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach items="${events}" var="event" varStatus="s">
 		<tr>
-			<th scope="row"><a href="<c:url value='/queryevent.controller?eventid=${event.eventID}'  />">  ${event.eventName} </a> </th> <td>${event.eventDate}</td><td>${event.eventStratTime}</td><td>${event.eventLocation}</td>
-			<td>${event.eventType}<br>
-			<c:out value="${event.eventType1}" default="--" /> <br> 
-			<c:out value="${event.eventType2}"  default="--" /> <br> 
-			<c:out value="${event.eventTypeCustom}" default="--" />
-			</td>
+			<th scope="row"><a href="<c:url value='/queryevent.controller?eventid=${event.eventID}'  />">  ${event.eventName} </a> </th> 
+			<c:choose>
+				<c:when test="${event.eventStatus == 'true'}">
+					<td>開放 <i class="fa fa-check fa-1x" aria-hidden="true"></i></td>
+				</c:when>
+				<c:when test="${event.eventStatus == 'false'}">
+					<td>不開放<i class="fa fa-times" aria-hidden="true"></i>
+					</td>
+				</c:when>
+			</c:choose>
+			
+			<td><fmt:formatDate pattern="yyyy-MM-dd aa HH:mm" value='${event.eventStartTime}'/></td>
+			<td><fmt:formatDate pattern="yyyy-MM-dd aa HH:mm" value='${event.eventEndTime}'/></td> 
+			<td>${event.eventLocation}</td>
+			<td>${event.eventType}<br></td>
 			<td>${event.eventMaxLimit}</td>
 			<td>${event.eventFee}</td>
+			<td>${event.eventClick}</td>
 			<td><input type="button" value="修改" name="eventID" onclick="location.href='/petpet/queryevent.controller?eventid=${event.eventID}'"> <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
 			</td>
 			<td><input type="button" class="delete" value="刪除" name="eventID" onclick="deleteItem(${event.eventID})"><i class="fa fa-trash fa-1x" aria-hidden="true"></i>
