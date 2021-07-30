@@ -101,11 +101,11 @@ table{
         </tr>
         <tr>
             <td>活動日期:</td>
-            <td>${event.eventDate}</td>
+            <td>${event.eventStatus}</td>
         </tr>
         <tr>
             <td>活動起始時間:</td>
-            <td>${event.eventStratTime}</td>
+            <td>${event.eventStartTime}</td>
         </tr>
         <tr>
             <td>活動結束時間:</td>
@@ -120,14 +120,6 @@ table{
             <td>${event.eventType}</td>
         </tr>
         <tr>
-            <td>活動種類1:</td>
-            <td>${event.eventType1}</td>
-        </tr>
-        <tr>
-            <td>活動種類2:</td>
-            <td>${event.eventType2}</td>
-        </tr>
-        <tr>
             <td>活動人數上限:</td>
             <td>${event.eventMaxLimit}</td>
         </tr>
@@ -137,8 +129,9 @@ table{
         </tr>
         <tr>
             <td>活動說明:</td>
-            <td>${event.eventDescribe}</td>
+            <td>${event.eventDescription}</td>                            
         </tr>        
+
     </tbody>
 </table>
 </div>

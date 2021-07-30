@@ -102,10 +102,10 @@ height: 70px;
         <p>  
         </div>
         <div class="col form-check">
-          活動是否開啟: <br><input type="checkbox" class="form-check-input" required name="eventstatus" id="checkboxId" />
+          活動是否開啟: <br><input type="checkbox" class="form-check-input"  name="eventstatus" id="checkboxId" value="true" />
              <small class="form-text text-muted">
           必填欄位
-      </small>      		
+           </small>      		
         </div>
 
       </div>
@@ -118,7 +118,7 @@ height: 70px;
           <p>
         </div>
     <div class="col">
-          活動起始時間: <br><input type="time" step="1" class="form-control" required  name="eventstarttime"  />
+          活動起始時間: <br><input type="time"  class="form-control" required  name="eventstarttime"  />
           <small id="passwordHelpBlock" class="form-text text-muted">
           必填欄位
       </small>
@@ -131,7 +131,7 @@ height: 70px;
       </small><p>
         </div>
     <div class="col">
-      活動結束時間: <br><input type="time"  step="1"  class="form-control" required name="eventendtime" value ="${event.eventEndTime}" />  
+          活動結束時間: <br><input type="time"   class="form-control" required name="eventendtime" value ="${event.eventEndTime}" />  
       <small id="passwordHelpBlock" class="form-text text-muted">
       必填欄位
       </small><p>
@@ -140,8 +140,8 @@ height: 70px;
       <div class="row">
           <div class="col">
             活動地點: <br><input type="text" class="form-control" required  name="eventlocation" value ="${event.eventLocation}" />
-            <small id="passwordHelpBlock" class="form-text text-muted">
-          必填欄位
+          <small id="passwordHelpBlock" class="form-text text-muted">
+            必填欄位
       </small>
       <p>        
           </div>
@@ -174,7 +174,7 @@ height: 70px;
 
 </div>
 
-共被點選${event.eventclick}次
+共被點選${event.eventClick}次
   
 <footer>
 第八組組員-蕭詠謙
@@ -187,7 +187,7 @@ height: 70px;
 
 
   
-  let checkState = $("#checkboxId").is(":checked") ? "true" : "false";
+// let checkState = $("#checkboxId").is(":checked") ? "true" : "false";
 
 </script>
 
