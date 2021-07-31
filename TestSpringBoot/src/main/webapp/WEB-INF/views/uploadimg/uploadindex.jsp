@@ -116,8 +116,6 @@ $('#imgupload').change(function() {
 
 // AJAX+錯誤回報
 $(document).ready(function() {
-    $('#loader').hide();
-
     $("#submit").on("click", function() {
     	$("#submit").prop("disabled", true);//上傳一次
     	var name = $("#name").val();
@@ -127,30 +125,6 @@ $(document).ready(function() {
         var form = $("#form").serialize();
         // 利用JS的FormData格式來序列化(serialize) input 當中的 name 與 file ，才可以用AJAX方式進行檔案上傳
     	var data = new FormData($("#form")[0]);
-        
-    	//alert(data);
-        $('#loader').show();
-        //如果表格內input的四個如果有空的話，顯示下面的CSS格式，把Submit鎖住，Loader藏起來，邊框改為紅色，Error messgae跳出字串
-        if (name === "" || file === "" || price === "" || description === "") {
-        	$("#submit").prop("disabled", false);
-            $('#loader').hide();
-            $("#name").css("border-color", "red");
-            $("#image").css("border-color", "red");
-            $("#price").css("border-color", "red");
-            $("#description").css("border-color", "red");
-            $("#error_name").html("Please fill the required field.");
-            $("#error_file").html("Please fill the required field.");
-            $("#error_price").html("Please fill the required field.");
-            $("#error_description").html("Please fill the required field.");
-        } else {
-            $("#name").css("border-color", "");
-            $("#image").css("border-color", "");
-            $("#price").css("border-color", "");
-            $("#description").css("border-color", "");
-            $('#error_name').css('opacity', 0);
-            $('#error_file').css('opacity', 0);
-            $('#error_price').css('opacity', 0);
-            $('#error_description').css('opacity', 0);
 
             //jquery 發送ajax的語法https://ithelp.ithome.com.tw/articles/10226692
                     $.ajax({
@@ -181,9 +155,9 @@ $(document).ready(function() {
                             location.reload();
                         }
                     });
-        }
+        })
             });
-        });
+    
 
 </script>
 

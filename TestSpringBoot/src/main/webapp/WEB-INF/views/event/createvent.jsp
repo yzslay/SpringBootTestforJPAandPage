@@ -30,9 +30,14 @@
 			  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
 			  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
 			  crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js" integrity="sha512-RCgrAvvoLpP7KVgTkTctrUdv7C6t7Un3p1iaoPr1++3pybCyCsCZZN7QEHMZTcJTmcJ7jzexTO+eFpHk4OCFAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js" integrity="sha512-ux1VHIyaPxawuad8d1wr1i9l4mTwukRq5B3s8G3nEmdENnKF5wKfOV6MEUH0k/rNT4mFr/yL+ozoDiwhUQekTg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<script  async defer
+ 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCn5ZqGvjfSwtQI12hbGKq2RraF1WlSa4&libraries=places&callback=initAutocomplete">
+</script>
+
+
 
 <title>新增活動資料</title>
 
@@ -74,6 +79,14 @@ content: "";
 display: block;
 height: 70px;
 }
+#demo{
+  max-width:200px;
+  max-height:150px;
+  }
+  #map {
+    max-height:150px;
+
+}
 
 </style>
 
@@ -89,9 +102,8 @@ height: 70px;
 </nav>	
 
 <div class="container anchor">
-  <form method="post" name="submitselection" action="/petpet/addevent.controller" >  
+  <form   id="form">  
      <input type="hidden"  readonly name="eventid" value="${event.eventID}" />
- 
 
     <div class="row"> 
       <div class="col">
@@ -133,45 +145,65 @@ height: 70px;
     <div class="col">
           活動結束時間: <br><input type="time"   class="form-control" required name="eventendtime" value ="${event.eventEndTime}" />  
       <small id="passwordHelpBlock" class="form-text text-muted">
-      必填欄位
+          必填欄位
       </small><p>
     </div>
       </div>
       <div class="row">
           <div class="col">
-            活動地點: <br><input type="text" class="form-control" required  name="eventlocation" value ="${event.eventLocation}" />
+            活動地點: <br><input type="text" class="form-control" required  name="eventlocation" id="autocomplete" value ="${event.eventLocation}" />
           <small id="passwordHelpBlock" class="form-text text-muted">
             必填欄位
-      </small>
-      <p>        
+           </small>
+           <p>        
+          </div>
+          <div class="col">
+            活動地點預留位置<div id="map"></div>
+
           </div>
        </div>
         <div class="row">
           <div class="col">
-          活動種類: <br><input type="text" class="form-control" required name="eventtype" value ="${event.eventType}"/>
-          <small id="passwordHelpBlock" class="form-text text-muted">
-          必填欄位
-      </small>
-      <p>
-           </div>
-      </div>
+            活動種類: <br><input type="text" class="form-control" required name="eventtype" value ="${event.eventType}"/>
+            <small id="passwordHelpBlock" class="form-text text-muted">
+            必填欄位
+            </small>
+            <p>
+          </div>
+      
+      
+          <div class="col">
+            活動人數上限: <br><input type="text"  class="form-control" required name="eventmaxlimit"value ="${event.eventMaxLimit}" /><p>
+          </div>
+          <div class="col">
+              活動費用:<br><input type="text"  name="eventfee"  value ="${event.eventFee}" />
+              <small class="form-text text-muted">
+              必填欄位
+              </small>  
+          </div>
+        </div>
+
       <div class="row">
         <div class="col">
-          活動人數上限: <br><input type="text"  class="form-control" required name="eventmaxlimit"value ="${event.eventMaxLimit}" /><p>
-      </div>
-      <div class="col">
-        活動費用:<br><input type="text"  name="eventfee"  value ="${event.eventFee}" />
-         <small class="form-text text-muted">
-       必填欄位
-     </small>  <p>
+          活動說明:<br><textarea name="eventdescription"  rows="5" cols="50"> ${event.eventDescription} </textarea><p>
+        </div>
+
+        <div class="col">
+          <label> 活動圖片上傳</label>
+          <input type="file" class="form-control" placeholder="" name="image" id="imgupload" required="required">
+          <p id="error_file"></p>
+        </div>
+        <div class="col">
+          <label class="col">圖片預覽上傳</label>
+          <img id="demo"/>
+          <!-- 先保留 -->
+          <p id="error_file"></p> 
         </div>
       </div>
-      <div>
-      活動說明:<br><textarea name="eventdescription"  rows="5" cols="50"> ${event.eventDescription} </textarea><p>
-     </div>
-      <button type="submit" class="btn btn-primary">確認</button>
+      <input type="submit" id="submit" class="btn btn-primary form-control" value="確認新增">
    </form>
-
+   <div id="success" class="text-center" style="color:green;"></div>
+   <div id="error" class="text-center" style="color:red;"></div>
 </div>
 
 共被點選${event.eventClick}次
@@ -183,10 +215,72 @@ height: 70px;
 </body>
 
 
+
 <script>
 
 
+$('#imgupload').change(function() {   
+	  var file = $('#imgupload')[0].files[0];
+	  var reader = new FileReader;
+	  reader.onload = function(e) {
+	    $('#demo').attr('src', e.target.result);
+	  };
+	  reader.readAsDataURL(file);
+	});
+
+let autocomplete
+
+function initAutocomplete(){
+    var autocomplete;
+    autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')), 
+    {
+        types: ['establishment'],
+        componentRestrictions: {
+        'country':[ 'TW' ]
+        },
+        fields:['place_id','geometry','name']
+    });
+
+
   
+  }; 
+
+
+  
+$(document).ready(function() {
+    $("#submit").on("click", function() {
+    	$("#submit").prop("disabled", true);//上傳一次
+    	  var name = $("#name").val();
+        var file = $("#imageupload").val(); 
+        var price = $("#price").val();
+        var description = $("#description").val();
+        var form = $("#form").serialize();
+        // 利用JS的FormData格式來序列化(serialize) input 當中的 name 與 file ，才可以用AJAX方式進行檔案上傳
+       	var data = new FormData($("#form")[0]);
+        console.log('MOO');
+        
+            //jquery 發送ajax的語法https://ithelp.ithome.com.tw/articles/10226692
+          $.ajax({
+              type: 'POST',
+              enctype: 'multipart/form-data',
+              data: data,
+              url: "/petpet/addevent.controller", 
+              processData: false,  //將原本不是xml時會自動將所發送的data轉成字串(String)的功能關掉
+              contentType: false,  //默认值为contentType = "application/x-www-form-urlencoded".在默认情况下，内容编码类型满足大多数情况。但要上傳檔案，要設為False
+              cache: false,
+              success: function(data, statusText, xhr) {  //	請求成功時執行函式,  前面新增的FormData物件放在第一個 ，第二個我不知道，第三個XMLHttpRequest(XHR) 物件發送
+              console.log(xhr.status);
+                if(xhr.status == "200") {
+                  $("#success").html("活動新增成功"); //成功訊息
+                    // setTimeout( "self.location.reload(); ",5000);  // Reload或轉到其他頁面
+                  }	   
+                },
+                error: function(e) {
+                    $("#error").html("活動新增失敗");
+                }
+            });
+        })
+            });
 // let checkState = $("#checkboxId").is(":checked") ? "true" : "false";
 
 </script>

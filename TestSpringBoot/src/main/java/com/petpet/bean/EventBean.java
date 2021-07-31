@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -47,6 +48,7 @@ public class EventBean implements java.io.Serializable {
 	private byte[] eventPicture;
 	@Column(name = "EVENTTYPE")
 	private String eventType;
+
 	@Column(name = "EVENTMAXLIMIT")
 	private int eventMaxLimit;
 	@Column(name = "EVENTFEE")
