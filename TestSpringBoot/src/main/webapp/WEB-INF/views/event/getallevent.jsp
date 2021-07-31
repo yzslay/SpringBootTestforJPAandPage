@@ -147,9 +147,12 @@ height: 70px;
  
 function deleteItem(ID) {
     if (confirm("你確定要刪除這個活動嗎")) {
-    	let  web="/petpet/deleteevent.controller?eventid="+ID;
-    	window.location.href=web;
-    	
+    	// let  web="/petpet/deleteevent.controller?eventid="+ID;
+    	// window.location.href=web;
+    	$.get( "/petpet/deleteevent.controller?eventid="+ID, function( ) {
+			alert( "刪除成功" );
+			location.reload() ;
+});
     }
     return false;
 }
