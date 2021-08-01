@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/backstage/backstage.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/backstage/backstagemevent.css"/>
 
-    <!-- JQ -->
+<!-- JQ -->
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap套件 -->
@@ -74,7 +74,7 @@ footer{
   }
 
 </style>
-<title>修改活動資料</title>
+<title>活動資料</title>
 </head>
 <body>
     <div class="sidenav">
@@ -86,7 +86,6 @@ footer{
         <a href="#" id="a_forum">論壇管理</a>
         <a href="#" id="a_">認養管理</a>
     </div>
-<fmt:setLocale value="en" /> 
 
 <div class="content" align="center">
     <div class="container-fluid">
@@ -118,7 +117,6 @@ footer{
         	</div>
 			
 			<div class=" form-check col-sm-2">
-		
 				 <c:choose>
 					<c:when test="${event.eventStatus == 'true'}">
 						<td>
@@ -142,15 +140,14 @@ footer{
 			</div>
 
       	</div>
-      	<div class="row">
-			
+      	<div class="row">	
 			<div class="col">
         		活動起始日期: <br><input type="date" id="startdate" class="form-control" required  name="eventstartdate"  >
         		<small  class="form-text text-muted">
 	        	必填欄位
 				</small>
         		<p>
-        	</div>
+   			</div>
 			<div class="col">
 				活動起始時間: <br><input type="time" id="starttime"  class="form-control" required name="eventstarttime" > 
 				<small class="form-text text-muted">
@@ -197,30 +194,27 @@ footer{
 				活動人數上限: <br><input type="text"  class="form-control" required name="eventmaxlimit"value ="${event.eventMaxLimit}" /><p>
 			</div>
 			<div class="col">
-				  活動費用:<br><input type="text"  name="eventfee" class="form-control" value ="${event.eventFee}" />
-				  <small class="form-text text-muted">
-				  必填欄位
-				  </small>  
+				活動費用:<br><input type="text"  name="eventfee" class="form-control" value ="${event.eventFee}" />
+				<small class="form-text text-muted">
+				必填欄位
+				</small>  
 			</div>
         </div>
 
 		<div class="row">
 			<div class="col-sm-6">
-			  活動說明:<br><textarea name="eventdescription"  rows="7" cols="40"> ${event.eventDescription} </textarea><p>
+			    活動說明:<br><textarea name="eventdescription"  rows="7" cols="40"> ${event.eventDescription} </textarea><p>
 			</div>
 	
-			<div class="col">
-			  <label> 活動圖片上傳</label>
-			  <input type="file" class="form-control" placeholder="" name="image" id="imgupload" required="required">
-			  <p id="error_file"></p>
+			<div class="col-sm-3">
+				<label> 活動圖片上傳</label>
+				<input type="file" class="form-control" placeholder="" name="image" id="imgupload" required="required">
 			</div>
-			<div class="col">
+			<div class="col-sm-3">
 			  <label class="col">圖片預覽上傳</label>
 			  <img id="demo"/>
-			  <!-- 先保留 -->
-			  <p id="error_file"></p> 
 			</div>
-		  </div>
+		</div>
         
         <c:if test="${empty event.eventID}">
             <input type="submit" id="submitadd" class="btn btn-primary form-control" value="確認新增">
@@ -234,34 +228,26 @@ footer{
     </div>
 </div>
 共被點選${event.eventClick}次
-    
 <footer>
-	第八組組員-蕭詠謙
+	第八組-蕭詠謙
 </footer>
     
-
 </body>
-
-
 <script>
 
 $(document).ready(function() {
+	// 用來匯入前面的函數的
 	var startdatevalue = "<fmt:formatDate pattern="yyyy-MM-dd" value="${event.eventStartTime}"/>";
-	console.log(startdatevalue);
 	document.getElementById("startdate").value =  startdatevalue;
 
 	var starttimevalue = "<fmt:formatDate pattern="HH:mm" value="${event.eventStartTime}"/>";
-	console.log(starttimevalue);
 	document.getElementById("starttime").value =  starttimevalue;
 
 	var enddatevalue = "<fmt:formatDate pattern="yyyy-MM-dd" value="${event.eventEndTime}"/>";
-	console.log(enddatevalue);
 	document.getElementById("enddate").value =  enddatevalue;
 
 	var endtimevalue = "<fmt:formatDate  pattern="HH:mm" value="${event.eventEndTime}"/>";
-	console.log(endtimevalue);
 	document.getElementById("endtime").value =  endtimevalue;
-
 })
 function initAutocomplete(){
     var autocomplete;
@@ -273,10 +259,8 @@ function initAutocomplete(){
         },
         fields:['place_id','geometry','name']
     });
-  
   }; 
 // let checkState = $("#checkboxId").is(":checked") ? "true" : "false";
-
 $('#imgupload').change(function() {   
 	  var file = $('#imgupload')[0].files[0];
 	  var reader = new FileReader;
@@ -289,14 +273,10 @@ $('#imgupload').change(function() {
 $(document).ready(function() {
     $("#submitupdate").on("click", function() {
     	$("#submitupdate").prop("disabled", true);//上傳一次
-    	var name = $("#name").val();
-        var file = $("#imageupload").val(); 
-        var price = $("#price").val();
-        var description = $("#description").val();
+
         var form = $("#form").serialize();
         // 利用JS的FormData格式來序列化(serialize) input 當中的 name 與 file ，才可以用AJAX方式進行檔案上傳
        	var data = new FormData($("#form")[0]);
-        console.log('MOO');
         
             //jquery 發送ajax的語法https://ithelp.ithome.com.tw/articles/10226692
           $.ajax({
@@ -321,15 +301,10 @@ $(document).ready(function() {
         })
     $("#submitadd").on("click", function() {
     	$("#submitadd").prop("disabled", true);//上傳一次
-    	var name = $("#name").val();
-        var file = $("#imageupload").val(); 
-        var price = $("#price").val();
-        var description = $("#description").val();
+
         var form = $("#form").serialize();
         // 利用JS的FormData格式來序列化(serialize) input 當中的 name 與 file ，才可以用AJAX方式進行檔案上傳
        	var data = new FormData($("#form")[0]);
-        console.log('MOO');
-        
             //jquery 發送ajax的語法https://ithelp.ithome.com.tw/articles/10226692
           $.ajax({
               type: 'POST',
@@ -352,8 +327,5 @@ $(document).ready(function() {
             });
         })
 });
-
-
-
 	</script> 
 </html>

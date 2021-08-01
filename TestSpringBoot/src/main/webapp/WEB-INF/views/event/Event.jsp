@@ -22,12 +22,12 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="<c:url value='/js/event/event.js'/>"></script>
-<!--  Google Map Api -->
 
 
 <title>BackStage</title>
 </head>
 <body>
+    <!-- 左側版型 -->
 <div class="sidenav">
     <a href="#" id="a_emp">員工管理</a>
     <a href="#" id="a_member">會員管理</a>
@@ -37,6 +37,7 @@
     <a href="#" id="a_forum">論壇管理</a>
     <a href="#" id="a_">認養管理</a>
 </div>
+<!-- 右邊上面版型 -->
 <div class="content" align="center">
     <div class="container-fluid">
         <div class="table-responsive">
@@ -60,6 +61,7 @@
                         </div>
                     </div>
                 </div>
+            <!-- 右邊下面表格版型，標題 -->
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
@@ -81,11 +83,12 @@
                             <th scope="col">修改刪除</th>
                         </tr>
                     </thead>
-                
+            <!-- 右邊下面內容欄位 -->
                 <tbody>
                     <c:forEach items="${events}" var="event" varStatus="s">
                         <tr>
                             <td>
+                                <!-- 隱藏的P   EventID用來給Checkbox用來選取刪除用 -->
 							    <span class="custom-checkbox">
 								    <input type="checkbox" id="checkbox<c:out value='${i.index+1}'/>" name="options[]" value="<c:out value='${i.index+1}'/>">
 								    <label for="checkbox"></label>
@@ -95,6 +98,7 @@
                             <td>
                                 <a href="<c:url value='/queryevent.controller?eventid=${event.eventID}'  />">  ${event.eventName} </a>
                             </td>
+                            <!-- 利用Choose 來換標籤 -->
                             <c:choose>
                                 <c:when test="${event.eventStatus == 'true'}">
                                     <td>開放 <i class="fa fa-check fa-1x" aria-hidden="true"></i></td>
@@ -104,6 +108,7 @@
                                     </td>
                                 </c:when>
                             </c:choose>
+                            <!-- 更改時間格式，比較清楚 -->
                             <td><fmt:formatDate pattern="yyyy-MM-dd aa HH:mm" value='${event.eventStartTime}'/></td>
                             <td><fmt:formatDate pattern="yyyy-MM-dd aa HH:mm" value='${event.eventEndTime}'/></td> 
                             <td><c:out value="${event.eventLocation}" /> </td>
@@ -128,7 +133,7 @@
 
 </body>
 <script>
- 
+//  右側的刪除標籤確認AJAX
  $(document).ready(function() {
     $("#delete").on("click", function() {
         if (confirm("你確定要刪除這個活動嗎")) {
@@ -141,6 +146,7 @@
         }
         return false;
     })
+//左上方Checkbox 全選，全不選
     var checkbox = $('table tbody input[type="checkbox"]');
 	$("#selectAll").click(function(){
 		if(this.checked){
@@ -158,7 +164,7 @@
 			$("#selectAll").prop("checked", false);
 		}
 	});
-
+// 點選刪除標籤，將ID放到LIST內跑迴圈送出AJAX做批次刪除
     $("a[class='btn btn-danger']").click(function(){
 	var ckdlist = [];
 		$('tbody input[type="checkbox"]').each(function(){
@@ -167,8 +173,6 @@
                 console.log(id);    
                 ckdlist.push(id);
             }
-
-
         });
         console.log(ckdlist.toString());
         ckdlist.forEach (id =>
