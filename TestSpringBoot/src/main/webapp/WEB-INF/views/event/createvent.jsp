@@ -4,10 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<% String path=request.getContextPath();
-	   String basePath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"+"event";
-	   System.out.println(basePath);%>
-<base href="<%=basePath%>">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
@@ -85,13 +81,9 @@ height: 70px;
   }
   #map {
     max-height:150px;
-
 }
-
 </style>
-
 </head>
-
 <body>
   <nav>
   <ul>
@@ -154,8 +146,8 @@ height: 70px;
             活動地點: <br><input type="text" class="form-control" required  name="eventlocation" id="autocomplete" value ="${event.eventLocation}" />
           <small id="passwordHelpBlock" class="form-text text-muted">
             必填欄位
-           </small>
-           <p>        
+          </small>
+          <p>        
           </div>
           <div class="col">
             活動地點預留位置<div id="map"></div>
@@ -240,8 +232,6 @@ function initAutocomplete(){
         },
         fields:['place_id','geometry','name']
     });
-
-
   
   }; 
 

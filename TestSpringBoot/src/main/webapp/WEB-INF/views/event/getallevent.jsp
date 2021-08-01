@@ -4,12 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
     <%! @SuppressWarnings("unchecked") %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<% String path=request.getContextPath();
-	   String basePath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"+"event";
-	   System.out.println(basePath);%>
-	<base href="<%=basePath%>">
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,12 +24,9 @@
 
 
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
- 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-
-
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<!-- <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>  -->
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"> -->
 
 <title> 活動頁面</title>
 <style>
@@ -59,8 +52,6 @@ nav ul li a{
   font-size:28px;
   margin:40px;
 }
-
-
 td {
   text-align: center;
 }
@@ -107,7 +98,7 @@ height: 70px;
 	<tbody>
 		<c:forEach items="${events}" var="event" varStatus="s">
 		<tr>
-			<th scope="row"><a href="<c:url value='/queryevent.controller?eventid=${event.eventID}'  />">  ${event.eventName} </a> </th> 
+			<td scope="row"><a href="<c:url value='/queryevent.controller?eventid=${event.eventID}'  />">  ${event.eventName} </a> </td> 
 			<c:choose>
 				<c:when test="${event.eventStatus == 'true'}">
 					<td>開放 <i class="fa fa-check fa-1x" aria-hidden="true"></i></td>

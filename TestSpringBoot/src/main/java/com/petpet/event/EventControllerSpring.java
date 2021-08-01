@@ -35,17 +35,22 @@ public class EventControllerSpring {
 	public String listAllEvents(Model m) {
 		List<EventBean> event = EventService.queryall();
 		m.addAttribute("events", event);
-		return 	"event/getallevent";
+		return 	"event/Event";
 	}
 	
 	@RequestMapping(path="/queryevent.controller", method = RequestMethod.GET)
 	public String listEvent(@RequestParam("eventid") int eventid,Model m) {
+		if ( eventid == (-1) ) {
+			
+		}else {
 		EventBean event = EventService.query(eventid);	
 		event.setEventClick(event.getEventClick()+1);
 		EventBean modifyeventbean = EventService.update(event);	
 		m.addAttribute("event", modifyeventbean);
 		System.out.println("MOO");
-		return 	"event/getaevent";
+		return 	"event/UpdateEvent";
+		}
+		return "event/UpdateEvent";
 	}
 	
 	@RequestMapping(path="/addevent.controller", method = RequestMethod.POST)
@@ -59,7 +64,6 @@ public class EventControllerSpring {
 		}else {
 			eventbean.setEventPicture(imageData);
 		}
-		
 		eventbean.setHostID(1);
 		eventbean.setEventName((String)(request.getParameter("eventname")));
 		eventbean.setEventStartTime(Timestamp.valueOf(request.getParameter("eventstartdate")+" "+request.getParameter("eventstarttime")+":01")); //處理Timestamp
@@ -102,18 +106,14 @@ public class EventControllerSpring {
 	public @ResponseBody ResponseEntity<?>  updateEvent(HttpServletRequest request, Model m, final @RequestParam("image") MultipartFile file) throws IOException {
 	
 	try {
-		EventBean eventbean = EventService.query(Integer.parseInt(request.getParameter("eventid")));	
-
-
-		
+		EventBean eventbean = EventService.query(Integer.parseInt(request.getParameter("eventid")));			
 		byte[] imageData = file.getBytes();		
 	
 		if(file.isEmpty()) {
 			eventbean.setEventPicture(null);		
 		}else {
 			eventbean.setEventPicture(imageData);
-		}
-			
+		}		
 		eventbean.setEventID(Integer.parseInt(request.getParameter("eventid")));
 		eventbean.setEventName((String)(request.getParameter("eventname")));
 		eventbean.setEventStartTime(Timestamp.valueOf(request.getParameter("eventstartdate")+" "+request.getParameter("eventstarttime")+":01"));
@@ -137,6 +137,12 @@ public class EventControllerSpring {
 	public String creatEvent(HttpServletRequest request ) {
 
 		return "event/createvent";
+		}
+	
+	@RequestMapping(path="/eventindex", method = RequestMethod.GET)
+	public String Event(HttpServletRequest request ) {
+
+		return "event/Event";
 		}
 }
 
