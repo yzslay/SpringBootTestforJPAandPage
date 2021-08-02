@@ -21,7 +21,7 @@ public class MockMemberService implements IMockMemberService {
 	private EventRepository eventRepository;
 
 	public List<MockMemberBean> queryall(){
-		return null;
+		return mockMemberRepository.findAll();
 	};
 	public MockMemberBean query(int memberid) {
 		return null;

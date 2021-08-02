@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "mockmember")
 @Component("memberbean")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,	property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,	property = "memberId")
 public class MockMemberBean implements java.io.Serializable {
 	@Transient //無視
 	private static final long serialVersionUID = 1L;
@@ -33,9 +33,22 @@ public class MockMemberBean implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="memberid")
     private Long memberId;
- 	@Column(name="member_name")
+ 	public Long getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(Long memberId) {
+		this.memberId = memberId;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	@Column(name="member_name")
     private String userName;
-
+ 	
+ 	
  	@ManyToMany(mappedBy = "members",targetEntity = EventBean.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
  	private List<EventBean> events = new ArrayList<>();
 	
