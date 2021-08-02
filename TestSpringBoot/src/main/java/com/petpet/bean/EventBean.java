@@ -6,22 +6,28 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="event")
 @Component("eventbean")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,	property = "id")
 public class EventBean implements java.io.Serializable {
 	
 	@Transient //無視
@@ -60,8 +66,12 @@ public class EventBean implements java.io.Serializable {
 	@Column(name = "eventclick")
 	private int eventClick ;
 	public int getEventID() {
-		return eventID;
+		return 	eventID;
 	}
+	
+	 @ManyToMany(targetEntity = MockMemberBean.class,cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	 private List<MockMemberBean> members;
+	 
 	public void setEventID(int eventID) {
 		this.eventID = eventID;
 	}

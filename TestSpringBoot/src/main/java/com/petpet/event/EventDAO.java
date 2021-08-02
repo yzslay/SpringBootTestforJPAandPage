@@ -7,7 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import com.petpet.bean.EventBean;
-
+//目前沒在用
 @Repository("EventDAO")
 public class EventDAO implements IEventDAO {
 	
