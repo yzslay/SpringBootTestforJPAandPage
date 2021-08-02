@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name="event")
 @Component("eventbean")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,	property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,	property = "eventID")
 public class EventBean implements java.io.Serializable {
 	
 	@Transient //無視
@@ -71,6 +71,15 @@ public class EventBean implements java.io.Serializable {
 	
 	 @ManyToMany(targetEntity = MockMemberBean.class,cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	 private List<MockMemberBean> members;
+	 
+	 public List<MockMemberBean> getMembers() {
+	        return members;
+	    }
+	 public void setMembers(List<MockMemberBean> members) {
+	        this.members = members;
+	    }
+	 
+	 
 	 
 	public void setEventID(int eventID) {
 		this.eventID = eventID;

@@ -5,8 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.petpet.bean.MockMemberBean;
 
-@Repository
-public interface  MocoMemberRepository  extends JpaRepository<MockMemberBean,Long >{
+@Repository("MockMemberRepository")
+public interface  MockMemberRepository  extends JpaRepository<MockMemberBean,Long >{
 	
 
 }

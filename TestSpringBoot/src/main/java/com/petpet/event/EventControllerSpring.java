@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.petpet.bean.EventBean;
-import com.petpet.bean.ProductBean;
 
 @Controller
 public class EventControllerSpring {

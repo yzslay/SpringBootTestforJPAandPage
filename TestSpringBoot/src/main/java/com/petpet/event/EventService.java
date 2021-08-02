@@ -18,7 +18,9 @@ import com.petpet.bean.EventBean;
 @Transactional
 public class EventService implements IEventService {
 	
-	@Autowired @Qualifier("EventRepository")
+	@Autowired 
+	private MockMemberRepository mockMemberRepository;
+	@Autowired
 	private EventRepository eventRepository;
 //	private IEventDAO EventDAO;
 	

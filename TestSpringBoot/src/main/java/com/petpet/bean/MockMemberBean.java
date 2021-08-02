@@ -37,8 +37,13 @@ public class MockMemberBean implements java.io.Serializable {
     private String userName;
 
  	@ManyToMany(mappedBy = "members",targetEntity = EventBean.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
- 	private List<EventBean> Event = new ArrayList<>();
+ 	private List<EventBean> events = new ArrayList<>();
 	
-	
+	 public List<EventBean> getEvents() {
+	        return events;
+	    }
+	 public void setEvents(List<EventBean> events) {
+	        this.events = events;
+	    }
 
 }
