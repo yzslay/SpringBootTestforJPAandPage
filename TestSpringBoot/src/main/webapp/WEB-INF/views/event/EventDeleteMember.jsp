@@ -42,11 +42,12 @@ uri="http://java.sun.com/jsp/jstl/fmt"%> <%! @SuppressWarnings("unchecked") %>
   </head>
 
   <body>
+    <h1>活動會員刪除</h1>
     <form
       id="form"
       class="form-control"
       method="GET"
-      action="${pageContext.request.contextPath}/eventdeletemember"
+      action="${pageContext.request.contextPath}/memberdeleteevent"
     >
       EventID:<input type="text" name="eventid" /> <br />
       MemberID:<input type="text" name="memberid" />

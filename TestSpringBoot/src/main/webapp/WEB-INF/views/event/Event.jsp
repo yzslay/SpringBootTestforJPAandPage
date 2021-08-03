@@ -121,10 +121,17 @@
                             <td><a href='/petpet/queryevent.controller?eventid=${event.eventID}' class="edit"   value = "修改"> <i class="material-icons" data-toggle="tooltip" title="修改">&#xE254;</i>   
                                 <a href="/petpet/deleteevent.controller?eventid=${event.eventID}" class="delete" id="delete"  value="刪除"><i class="material-icons" data-toggle="tooltip" title="刪除">&#xE872;</i></a>
                             </td>
-
+                            <td>
                             <c:set var="eventmember" value="${event.members}" />
-                            <c:set var="eventmembername" value="${eventmember.get(0)}" />
-                            ${eventmembername.userName}
+                            <c:if test="${not empty eventmember}">
+                                <c:forEach items="${eventmember}" var="eventmember" varStatus="s">
+
+                                <c:set var="eventmembername" value="${eventmember}" />
+                                ${eventmembername.userName}
+                               </c:forEach>
+                               <!-- 利用C:set撈出EL資料，迴圈撈出活動參加人員，Test檢驗是否有參加會員 -->
+                            </c:if>   
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>

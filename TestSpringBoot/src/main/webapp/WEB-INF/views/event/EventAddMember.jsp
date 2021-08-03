@@ -6,6 +6,9 @@ uri="http://java.sun.com/jsp/jstl/fmt"%> <%! @SuppressWarnings("unchecked") %>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE" />
+    <META HTTP-EQUIV="EXPIRES" CONTENT="0" />
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>活動會員新增</title>
@@ -39,11 +42,12 @@ uri="http://java.sun.com/jsp/jstl/fmt"%> <%! @SuppressWarnings("unchecked") %>
   </head>
 
   <body>
+    <h1>活動會員新增</h1>
     <form
       id="form"
       class="form-control"
       method="GET"
-      action="${pageContext.request.contextPath}/eventaddmember"
+      action="${pageContext.request.contextPath}/memberaddevent"
     >
       EventID:<input type="text" name="eventid" /> <br />
       MemberID:<input type="text" name="memberid" />
@@ -51,7 +55,7 @@ uri="http://java.sun.com/jsp/jstl/fmt"%> <%! @SuppressWarnings("unchecked") %>
         type="submit"
         id="submit"
         class="btn btn-primary form-control"
-        value="確認修改"
+        value="確認新增"
       />
     </form>
   </body>

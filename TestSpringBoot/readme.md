@@ -13,6 +13,7 @@
 6. 修改+查詢寫完
    其他小地方自己看啦有備註
    起始路徑為
+
    http://localhost:7070/petpet/upload
 
 8/1 實作活動後台版面完畢
@@ -25,6 +26,13 @@
 6. Google Place autocomplete (寫的時候請注意)
 7. 各種版面調整
    起始路徑為 http://localhost:7070/petpet/queryallevent.controller
+
+8/3
+
+1. 新增活動成員刪除欄位
+2. 活動後臺增加顯示多位成員欄位
+3. 檢測成員是否多重參加同一活動
+4. 新增頁面
 
 event SQL 如下
 

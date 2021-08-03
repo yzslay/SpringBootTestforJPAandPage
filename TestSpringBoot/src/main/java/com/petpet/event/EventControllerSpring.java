@@ -2,10 +2,8 @@ package com.petpet.event;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +33,7 @@ public class EventControllerSpring {
 	@Autowired
 	private IMockMemberService MockMemberService;
 	
+	// 一開始查詢所有的
 	@RequestMapping(path={"/queryallevent.controller","/"}, method = {RequestMethod.POST,RequestMethod.GET})
 	public String listAllEvents(Model m) {
 		List<EventBean> event = EventService.queryall();
@@ -42,6 +41,7 @@ public class EventControllerSpring {
 		return 	"event/Event";
 	}
 	
+	//查詢單一活動，點閱+1
 	@RequestMapping(path="/queryevent.controller", method = RequestMethod.GET)
 	public String listEvent(@RequestParam("eventid") int eventid,Model m) {
 		if ( eventid == (-1) ) {
@@ -56,7 +56,7 @@ public class EventControllerSpring {
 		}
 		return "event/UpdateEvent";
 	}
-	
+	// 增加活動
 	@RequestMapping(path="/addevent.controller", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> addEvent(HttpServletRequest request, Model m, final @RequestParam("image") MultipartFile file) throws IOException {
 		//有空Rewrite
@@ -88,6 +88,7 @@ public class EventControllerSpring {
 		}
 	}
 	
+	//圖片SRC直接輸出到網頁上
 	@GetMapping("/event/display/{id}")  // 用來匯出資料庫的圖片
 	@ResponseBody
 	public void showEventImage(@PathVariable("id") int id, HttpServletResponse response, EventBean Event) throws ServletException, IOException {
@@ -98,6 +99,7 @@ public class EventControllerSpring {
 		response.getOutputStream().close();
 	}
 	
+// 刪除Event
 	@RequestMapping(path="/deleteevent.controller", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?>  deleteEvent(HttpServletRequest request, Model m) {
 		int eventid =Integer.parseInt(request.getParameter("eventid"));
@@ -106,7 +108,8 @@ public class EventControllerSpring {
 //      目前不用回傳
 		return new ResponseEntity<>("刪除成功", HttpStatus.OK);
 	}
-	
+
+//修改Event，之後修改參數...現在太亂了
 	@RequestMapping(path="/modifyevent.controller", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?>  updateEvent(HttpServletRequest request, Model m, final @RequestParam("image") MultipartFile file) throws IOException {
 	
@@ -138,28 +141,19 @@ public class EventControllerSpring {
 		e.printStackTrace();
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		}
-//	@RequestMapping(path="/createeevent.url", method = RequestMethod.GET)
-//	public String creatEvent(HttpServletRequest request ) {
-//
-//		return "event/createvent";
-//		}
-	
-	@RequestMapping(path="/eventindex", method = RequestMethod.GET)
-	public String Event(HttpServletRequest request ) {
-
-		return "event/Event";
-		}
+	}
+//跳轉增加活動頁面
 	@RequestMapping(path="/EventAdd", method = RequestMethod.GET)
 	public String Eventadd(HttpServletRequest request ) {
 		return "event/EventAddMember";
 		}
+//跳轉刪除活動頁面
 	@RequestMapping(path="/Eventdelete", method = RequestMethod.GET)
 	public String Eventde(HttpServletRequest request ) {
 		return "event/EventDeleteMember";
 		}
 	
-// 新增活動參加人員 給Member Id 跟 Event id 
+// 新增活動參加人員 給Member Id 跟 Event id ，找出兩筆關聯在做儲存
 	@RequestMapping(path="/memberaddevent", method = RequestMethod.GET)
 	public  @ResponseBody ResponseEntity<?> Eventaddmember( HttpServletRequest request  ) {
 		int eventid;
@@ -169,6 +163,14 @@ public class EventControllerSpring {
 		if ( EventService.query(eventid) != null ){		
 			EventBean memberevent = EventService.query(eventid);
 			MockMemberBean member = MockMemberService.query(memberid);
+			
+			List<EventBean> listbean= member.getEvents();
+			
+			for (int i = 0; i < listbean.size(); i++) {
+				if ((listbean.get(i).getEventID()) ==  memberevent.getEventID()){
+					return  new ResponseEntity<>("重複參加活動", HttpStatus.BAD_REQUEST);
+				}
+			}		
 			member.getEvents().addAll(Arrays.asList(memberevent));
 			MockMemberService.save(member);
 		}else {
@@ -176,7 +178,8 @@ public class EventControllerSpring {
 		return  new ResponseEntity<>("成功", HttpStatus.OK);
 	}
 	
-	@RequestMapping(path="/eventdeletemember", method = RequestMethod.GET)
+// 刪除活動參加人員	
+	@RequestMapping(path="/memberdeleteevent", method = RequestMethod.GET)
 	public  @ResponseBody ResponseEntity<?> Eventdeletemember( HttpServletRequest request  ) {
 		int eventid;
 		long memberid;
@@ -185,7 +188,6 @@ public class EventControllerSpring {
 		if ( EventService.query(eventid) != null ){		
 			EventBean memberevent = EventService.query(eventid);
 			MockMemberBean member = MockMemberService.query(memberid);
-						
 			member.getEvents().remove(memberevent);
 			memberevent.getMembers().remove(member);
 			MockMemberService.save(member);

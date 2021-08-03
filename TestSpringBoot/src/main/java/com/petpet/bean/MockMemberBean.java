@@ -3,7 +3,6 @@ package com.petpet.bean;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.springframework.stereotype.Component;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -24,7 +21,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "mockmember")
 @Component("memberbean")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,	property = "memberId")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,	property = "memberId")  // 使用@JsonIdentityInfo 避免迴圈傳遞資料https://blog.csdn.net/dnc8371/article/details/106701314
 public class MockMemberBean implements java.io.Serializable {
 	@Transient //無視
 	private static final long serialVersionUID = 1L;
@@ -51,7 +48,9 @@ public class MockMemberBean implements java.io.Serializable {
  	
  	@ManyToMany(targetEntity = EventBean.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
  	private List<EventBean> events = new ArrayList<EventBean>();
-	
+// 多對多裡面只能操控一邊的新增刪除，一邊要有MappedBy(這邊不能寫)，另外一邊可以可以操作，這個例子是操作會員參加活動，所以Event那邊寫Map
+// 由於在會員這邊的一個會員可以對應到多筆Member，所以這邊要列Arraylist或是Set(不重複)，凱文你給我去用Set+欄位
+ 	
 	 public List<EventBean> getEvents() {
 	        return events;
 	    }

@@ -69,6 +69,9 @@ public class EventBean implements java.io.Serializable {
 		return 	eventID;
 	}
 	
+//對應到Event欄位的Members，請用{CascadeType.PERSIST, CascadeType.MERGE}  不要用 CascadeType.PERSIST All
+//為什麼請看之前學姊貼的資料，如果用All的話會連帶的資料一併刪除,記得加上Get Set方法
+	
 	 @ManyToMany(mappedBy = "events",targetEntity = MockMemberBean.class , cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	 private List<MockMemberBean> members;
 	 
