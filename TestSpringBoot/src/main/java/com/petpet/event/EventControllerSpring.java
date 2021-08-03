@@ -152,31 +152,53 @@ public class EventControllerSpring {
 		}
 	@RequestMapping(path="/EventAdd", method = RequestMethod.GET)
 	public String Eventadd(HttpServletRequest request ) {
-
 		return "event/EventAddMember";
 		}
-	
-// 新增活動參加人員
-	@RequestMapping(path="/eventaddmember", method = RequestMethod.GET)
-	public  @ResponseBody ResponseEntity<?> Eventaddmember(HttpServletRequest request  ) {
-		int a;
-		long b;
-		a= Integer.parseInt(request.getParameter("eventid"));
-		b= Long.parseLong(request.getParameter("memberid"));
-		
-		if ( EventService.query(a) != null ){
-			System.out.println("MOO");
-			EventBean memberevent = EventService.query(a);
-			MockMemberBean member = MockMemberService.query(b);
-			System.out.println(member);
-			member.getEvents().addAll(Arrays.asList(memberevent));
-			MockMemberService.update(member);
-			System.out.println("Moo2");
-
-		}else {
-			System.out.println("NO event");
+	@RequestMapping(path="/Eventdelete", method = RequestMethod.GET)
+	public String Eventde(HttpServletRequest request ) {
+		return "event/EventDeleteMember";
 		}
-		return  new ResponseEntity<>("Product Saved With File - ", HttpStatus.OK);
+	
+// 新增活動參加人員 給Member Id 跟 Event id 
+	@RequestMapping(path="/memberaddevent", method = RequestMethod.GET)
+	public  @ResponseBody ResponseEntity<?> Eventaddmember( HttpServletRequest request  ) {
+		int eventid;
+		long memberid;
+		eventid= Integer.parseInt(request.getParameter("eventid"));
+		memberid= Long.parseLong(request.getParameter("memberid"));
+		if ( EventService.query(eventid) != null ){		
+			EventBean memberevent = EventService.query(eventid);
+			MockMemberBean member = MockMemberService.query(memberid);
+			member.getEvents().addAll(Arrays.asList(memberevent));
+			MockMemberService.save(member);
+		}else {
+		}
+		return  new ResponseEntity<>("成功", HttpStatus.OK);
 	}
+	
+	@RequestMapping(path="/eventdeletemember", method = RequestMethod.GET)
+	public  @ResponseBody ResponseEntity<?> Eventdeletemember( HttpServletRequest request  ) {
+		int eventid;
+		long memberid;
+		eventid= Integer.parseInt(request.getParameter("eventid"));
+		memberid= Long.parseLong(request.getParameter("memberid"));
+		if ( EventService.query(eventid) != null ){		
+			EventBean memberevent = EventService.query(eventid);
+			MockMemberBean member = MockMemberService.query(memberid);
+						
+			member.getEvents().remove(memberevent);
+			memberevent.getMembers().remove(member);
+			MockMemberService.save(member);
+		}else {
+		}
+		return  new ResponseEntity<>("成功", HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
+	
+	
 }
 

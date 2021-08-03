@@ -69,7 +69,7 @@ public class EventBean implements java.io.Serializable {
 		return 	eventID;
 	}
 	
-	 @ManyToMany(targetEntity = MockMemberBean.class,cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	 @ManyToMany(mappedBy = "events",targetEntity = MockMemberBean.class , cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	 private List<MockMemberBean> members;
 	 
 	 public List<MockMemberBean> getMembers() {

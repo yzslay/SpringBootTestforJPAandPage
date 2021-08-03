@@ -33,7 +33,7 @@ public class MockMemberService implements IMockMemberService {
 		return mockMemberRepository.save(mockMemberBean);
 
 	}
-	public MockMemberBean update(MockMemberBean mockMemberBean) {
+	public MockMemberBean save(MockMemberBean mockMemberBean) {
 		return mockMemberRepository.save(mockMemberBean);
 	}
 	public List<MockMemberBean> updateAll(List<MockMemberBean> mockMemberBean) {
@@ -41,8 +41,10 @@ public class MockMemberService implements IMockMemberService {
 	}
 	
 	
-	public MockMemberBean delete(int memberid) {
-		return null;
+	public MockMemberBean delete(Long memberid) {
+		MockMemberBean mockMemberBean = mockMemberRepository.findById(memberid).orElse(null);
+		mockMemberRepository.deleteById(memberid);
+		return mockMemberBean;
 	}
 	public List<MockMemberBean> queryallpage() {
 		return null;

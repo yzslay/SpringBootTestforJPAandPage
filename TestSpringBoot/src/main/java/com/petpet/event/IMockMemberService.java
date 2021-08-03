@@ -9,7 +9,7 @@ public interface IMockMemberService {
 	public List<MockMemberBean> queryall();
 	public MockMemberBean query(Long memberid);
 	public MockMemberBean insert(MockMemberBean mockMemberBean);
-	public MockMemberBean update(MockMemberBean mockMemberBean);
-	public MockMemberBean delete(int memberid);
+	public MockMemberBean save(MockMemberBean mockMemberBean);
+	public MockMemberBean delete(Long memberid);
 	public List<MockMemberBean> queryallpage();
 }

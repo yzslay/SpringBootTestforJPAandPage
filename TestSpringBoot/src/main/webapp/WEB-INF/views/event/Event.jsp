@@ -44,12 +44,14 @@
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <h2><b>線下活動管理</b></h2>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-5">
 						    <a href="${pageContext.request.contextPath}/queryevent.controller?eventid=-1"  class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>新增活動</span></a>
-						    <a href="#deleteEmployeeModal" class="btn btn-danger"><i class="material-icons">&#xE15C;</i> <span>刪除</span></a>						
+						    <a href="#deleteEmployeeModal" class="btn btn-danger"><i class="material-icons">&#xE15C;</i> <span>刪除活動</span></a>	
+                            <a href="${pageContext.request.contextPath}/EventAdd" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>成員新增活動</span></a>
+                            <a href="${pageContext.request.contextPath}/Eventdelete" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>成員刪除活動</span></a>
 				    	</div>
                         <div class="col-sm-3">
                             <div class="search-box">
