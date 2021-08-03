@@ -97,7 +97,7 @@ footer{
                             <h2><b>線下活動管理</b></h2>
                         </div>
                         <div class="col-sm-3">
-						    <a href="${pageContext.request.contextPath}/queryallevent.controller" class="btn btn-success" > <i class="material-icons">search</i> <span>查詢活動</span></a>
+						    <a href="${pageContext.request.contextPath}/petpet/queryallevent.controller" class="btn btn-success" > <i class="material-icons">search</i> <span>查詢活動</span></a>
 				    	</div>
 
                     </div>

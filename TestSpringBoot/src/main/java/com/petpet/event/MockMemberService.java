@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.petpet.bean.EventBean;
 import com.petpet.bean.MockMemberBean;
 
 
@@ -23,15 +24,23 @@ public class MockMemberService implements IMockMemberService {
 	public List<MockMemberBean> queryall(){
 		return mockMemberRepository.findAll();
 	};
-	public MockMemberBean query(int memberid) {
-		return null;
+	public MockMemberBean query(Long memberid) {
+		MockMemberBean mockMemberBean = mockMemberRepository.findById(memberid).orElse(null) ;
+		return mockMemberBean;
+	
 	}
 	public MockMemberBean insert(MockMemberBean mockMemberBean) {
-		return null;
+		return mockMemberRepository.save(mockMemberBean);
+
 	}
 	public MockMemberBean update(MockMemberBean mockMemberBean) {
-		return null;
+		return mockMemberRepository.save(mockMemberBean);
 	}
+	public List<MockMemberBean> updateAll(List<MockMemberBean> mockMemberBean) {
+		return mockMemberRepository.saveAll(mockMemberBean);
+	}
+	
+	
 	public MockMemberBean delete(int memberid) {
 		return null;
 	}

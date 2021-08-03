@@ -7,7 +7,7 @@ import com.petpet.bean.MockMemberBean;
 
 public interface IMockMemberService {
 	public List<MockMemberBean> queryall();
-	public MockMemberBean query(int memberid);
+	public MockMemberBean query(Long memberid);
 	public MockMemberBean insert(MockMemberBean mockMemberBean);
 	public MockMemberBean update(MockMemberBean mockMemberBean);
 	public MockMemberBean delete(int memberid);

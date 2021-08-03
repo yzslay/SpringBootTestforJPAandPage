@@ -78,8 +78,7 @@ public class EventBean implements java.io.Serializable {
 	 public void setMembers(List<MockMemberBean> members) {
 	        this.members = members;
 	    }
-	 
-	 
+
 	 
 	public void setEventID(int eventID) {
 		this.eventID = eventID;

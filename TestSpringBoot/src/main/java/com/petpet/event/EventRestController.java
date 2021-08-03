@@ -1,5 +1,6 @@
 package com.petpet.event;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,15 @@ public class EventRestController {
 	@RequestMapping(path={"/queryalluser.rest",}, method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public List<MockMemberBean>   listAllUser(Model m) {
+		
 		List<MockMemberBean> Memberbean = MockMemberService.queryall();
+		
+		 if(Memberbean.size()>0) {
+			 List<MockMemberBean> MemberModels = new ArrayList<>();
+			 
+		
+			 
+		 }
 		m.addAttribute("events", Memberbean);
 		return  Memberbean	;
 	

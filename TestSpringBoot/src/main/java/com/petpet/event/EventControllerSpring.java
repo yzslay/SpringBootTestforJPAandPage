@@ -2,6 +2,8 @@ package com.petpet.event;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +25,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.petpet.bean.EventBean;
+import com.petpet.bean.MockMemberBean;
 
 @Controller
 public class EventControllerSpring {
 	
 	@Autowired
 	private IEventService EventService;
+	@Autowired
+	private IMockMemberService MockMemberService;
 	
 	@RequestMapping(path={"/queryallevent.controller","/"}, method = {RequestMethod.POST,RequestMethod.GET})
 	public String listAllEvents(Model m) {
@@ -54,7 +59,7 @@ public class EventControllerSpring {
 	
 	@RequestMapping(path="/addevent.controller", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> addEvent(HttpServletRequest request, Model m, final @RequestParam("image") MultipartFile file) throws IOException {
-		
+		//有空Rewrite
 	try {
 		byte[] imageData = file.getBytes();		
 		EventBean eventbean = new EventBean();		
@@ -97,7 +102,8 @@ public class EventControllerSpring {
 	public @ResponseBody ResponseEntity<?>  deleteEvent(HttpServletRequest request, Model m) {
 		int eventid =Integer.parseInt(request.getParameter("eventid"));
 		EventBean eventbean = EventService.delete(eventid);
-		m.addAttribute("event",eventbean);
+//		m.addAttribute("event",eventbean);
+//      目前不用回傳
 		return new ResponseEntity<>("刪除成功", HttpStatus.OK);
 	}
 	
@@ -125,23 +131,52 @@ public class EventControllerSpring {
 		eventbean.setEventDescription((String)(request.getParameter("eventdescription")));		
 		eventbean.setEventClick(Integer.parseInt(request.getParameter("eventclick")));
 		EventBean modifyeventbean = EventService.update(eventbean);
-		m.addAttribute("event",modifyeventbean);
+//		m.addAttribute("event",modifyeventbean);
+// 目前不用回傳Bean
 		return new ResponseEntity<>("Product Saved With File - ", HttpStatus.OK);
 	}catch  (Exception e) {
 		e.printStackTrace();
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		}
-	@RequestMapping(path="/createeevent.url", method = RequestMethod.GET)
-	public String creatEvent(HttpServletRequest request ) {
-
-		return "event/createvent";
-		}
+//	@RequestMapping(path="/createeevent.url", method = RequestMethod.GET)
+//	public String creatEvent(HttpServletRequest request ) {
+//
+//		return "event/createvent";
+//		}
 	
 	@RequestMapping(path="/eventindex", method = RequestMethod.GET)
 	public String Event(HttpServletRequest request ) {
 
 		return "event/Event";
 		}
+	@RequestMapping(path="/EventAdd", method = RequestMethod.GET)
+	public String Eventadd(HttpServletRequest request ) {
+
+		return "event/EventAddMember";
+		}
+	
+// 新增活動參加人員
+	@RequestMapping(path="/eventaddmember", method = RequestMethod.GET)
+	public  @ResponseBody ResponseEntity<?> Eventaddmember(HttpServletRequest request  ) {
+		int a;
+		long b;
+		a= Integer.parseInt(request.getParameter("eventid"));
+		b= Long.parseLong(request.getParameter("memberid"));
+		
+		if ( EventService.query(a) != null ){
+			System.out.println("MOO");
+			EventBean memberevent = EventService.query(a);
+			MockMemberBean member = MockMemberService.query(b);
+			System.out.println(member);
+			member.getEvents().addAll(Arrays.asList(memberevent));
+			MockMemberService.update(member);
+			System.out.println("Moo2");
+
+		}else {
+			System.out.println("NO event");
+		}
+		return  new ResponseEntity<>("Product Saved With File - ", HttpStatus.OK);
+	}
 }
 

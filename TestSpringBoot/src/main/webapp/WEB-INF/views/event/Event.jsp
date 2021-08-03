@@ -120,7 +120,9 @@
                                 <a href="/petpet/deleteevent.controller?eventid=${event.eventID}" class="delete" id="delete"  value="刪除"><i class="material-icons" data-toggle="tooltip" title="刪除">&#xE872;</i></a>
                             </td>
 
-
+                            <c:set var="eventmember" value="${event.members}" />
+                            <c:set var="eventmembername" value="${eventmember.get(0)}" />
+                            ${eventmembername.userName}
                         </tr>
                     </c:forEach>
                 </tbody>
