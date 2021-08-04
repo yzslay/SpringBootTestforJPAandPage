@@ -68,7 +68,8 @@ public class EventControllerSpring {
 		}else {
 			eventbean.setEventPicture(imageData);
 		}
-		eventbean.setHostID(1);
+		MockMemberBean member = MockMemberService.query((long) 1);
+		eventbean.setHostmember(member);
 		eventbean.setEventName((String)(request.getParameter("eventname")));
 		eventbean.setEventStartTime(Timestamp.valueOf(request.getParameter("eventstartdate")+" "+request.getParameter("eventstarttime")+":01")); //處理Timestamp
 		eventbean.setEventEndTime(Timestamp.valueOf(request.getParameter("eventenddate")+" "+request.getParameter("eventendtime")+":01"));
@@ -122,6 +123,7 @@ public class EventControllerSpring {
 		}else {
 			eventbean.setEventPicture(imageData);
 		}		
+		
 		eventbean.setEventID(Integer.parseInt(request.getParameter("eventid")));
 		eventbean.setEventName((String)(request.getParameter("eventname")));
 		eventbean.setEventStartTime(Timestamp.valueOf(request.getParameter("eventstartdate")+" "+request.getParameter("eventstarttime")+":01"));

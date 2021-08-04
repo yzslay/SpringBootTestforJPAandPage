@@ -1,25 +1,24 @@
 package com.petpet.bean;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -35,8 +34,7 @@ public class EventBean implements java.io.Serializable {
 	@Id @Column(name = "EVENTID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int eventID;
-	@Column(name = "HOSTID")
-	private int hostID;
+
 	@Column(name = "EVENTNAME" , nullable = false)
 	private String eventName;
 	
@@ -61,9 +59,9 @@ public class EventBean implements java.io.Serializable {
 	private int eventFee;
 	@Column(name = "EVENTSTATUS")
 	private boolean eventStatus;
-	@Column(name = "eventdescription")
+	@Column(name = "EVENTDESCRIPTION")
 	private String eventDescription ;
-	@Column(name = "eventclick")
+	@Column(name = "EVENTCLICK")
 	private int eventClick ;
 	public int getEventID() {
 		return 	eventID;
@@ -82,16 +80,22 @@ public class EventBean implements java.io.Serializable {
 	        this.members = members;
 	    }
 
+	 @JsonBackReference
+	 @ManyToOne(targetEntity = MockMemberBean.class,fetch = FetchType.LAZY)
+	 private MockMemberBean hostmember;
+
+	 
 	 
 	public void setEventID(int eventID) {
 		this.eventID = eventID;
 	}
-	public int getHostID() {
-		return hostID;
+	public MockMemberBean getHostmember() {
+		return hostmember;
 	}
-	public void setHostID(int hostID) {
-		this.hostID = hostID;
+	public void setHostmember(MockMemberBean hostmember) {
+		this.hostmember = hostmember;
 	}
+
 	public String getEventName() {
 		return eventName;
 	}

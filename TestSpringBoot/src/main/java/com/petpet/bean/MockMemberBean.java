@@ -10,12 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 
 
 @Entity
@@ -51,11 +52,24 @@ public class MockMemberBean implements java.io.Serializable {
 // 多對多裡面只能操控一邊的新增刪除，一邊要有MappedBy(這邊不能寫)，另外一邊可以可以操作，這個例子是操作會員參加活動，所以Event那邊寫Map
 // 由於在會員這邊的一個會員可以對應到多筆Member，所以這邊要列Arraylist或是Set(不重複)，凱文你給我去用Set+欄位
  	
-	 public List<EventBean> getEvents() {
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "hostmember")
+	private List<EventBean> hostevent;
+ 	
+ 	
+ 	
+	 public List<EventBean> getHostevent() {
+		return hostevent;
+	}
+	public void setHostevent(List<EventBean> hostevent) {
+		this.hostevent = hostevent;
+	}
+	public List<EventBean> getEvents() {
 	        return events;
 	    }
 	 public void setEvents(List<EventBean> events) {
 	        this.events = events;
 	    }
+	 
+	
 
 }
