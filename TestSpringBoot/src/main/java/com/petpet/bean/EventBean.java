@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -82,10 +83,9 @@ public class EventBean implements java.io.Serializable {
 
 	 @JsonBackReference
 	 @ManyToOne(targetEntity = MockMemberBean.class,fetch = FetchType.LAZY)
+	 @JoinColumn(name="MOCKMEMBERID")
 	 private MockMemberBean hostmember;
-
-	 
-	 
+ 
 	public void setEventID(int eventID) {
 		this.eventID = eventID;
 	}

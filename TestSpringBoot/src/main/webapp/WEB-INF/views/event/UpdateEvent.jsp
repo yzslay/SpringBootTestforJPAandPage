@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.* "%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-    <%! @SuppressWarnings("unchecked") %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%! @SuppressWarnings("unchecked") %>
 <!DOCTYPE html>
 <html>
 <head>
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="EXPIRES" CONTENT="0">
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,6 +77,8 @@ footer{
   max-height:150px;
   }
 
+
+
 </style>
 <title>活動資料</title>
 </head>
@@ -87,7 +93,7 @@ footer{
         <a href="#" id="a_">認養管理</a>
     </div>
 
-<div class="content" align="center">
+<div class="content custom-container-width" align="center">
     <div class="container-fluid">
         <div class="table-responsive">
             <div class="table-wrapper">
@@ -97,7 +103,7 @@ footer{
                             <h2><b>線下活動管理</b></h2>
                         </div>
                         <div class="col-sm-3">
-						    <a href="${pageContext.request.contextPath}/petpet/queryallevent.controller" class="btn btn-success" > <i class="material-icons">search</i> <span>查詢活動</span></a>
+						    <a href="${pageContext.request.contextPath}/queryallevent.controller" class="btn btn-success" > <i class="material-icons">search</i> <span>查詢活動</span></a>
 				    	</div>
 
                     </div>
@@ -117,6 +123,12 @@ footer{
         	</div>
 			
 			<div class=" form-check col-sm-2">
+				<c:if test="${empty event.eventID}">
+					<input type="checkbox" class="form-check-input"  name="eventstatus" id="checkboxId"  value="true" />
+					<label for="checkboxId"> 活動是否開啟:</label><br>
+				</c:if>
+
+
 				 <c:choose>
 					<c:when test="${event.eventStatus == 'true'}">
 						<td>

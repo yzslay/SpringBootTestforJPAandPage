@@ -58,6 +58,11 @@ content: "";
 display: block;
 height: 80px;
 }
+
+.custom-container-width {
+    max-width: 600px;
+}
+
 footer{
   background-color:#58876D;
   padding:13px;
@@ -90,7 +95,7 @@ footer{
 		</ul>
 	</nav>	
 	<fmt:setLocale value="en" /> 
-<div class="container anchor">
+<div class="container anchor  custom-container-width">
 	<!-- 表格從這開始 -->
     <form  id="form" name="submitselection">  
     	 <input type="hidden"  readonly name="eventid" value="${event.eventID}" />

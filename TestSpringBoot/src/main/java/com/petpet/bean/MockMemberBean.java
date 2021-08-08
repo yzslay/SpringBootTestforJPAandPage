@@ -56,7 +56,6 @@ public class MockMemberBean implements java.io.Serializable {
 	private List<EventBean> hostevent;
  	
  	
- 	
 	 public List<EventBean> getHostevent() {
 		return hostevent;
 	}

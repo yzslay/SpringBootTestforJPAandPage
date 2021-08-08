@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,7 @@ import com.petpet.bean.MockMemberBean;
 @Controller
 public class EventControllerSpring {
 	
+
 	@Autowired
 	private IEventService EventService;
 	@Autowired
@@ -39,6 +42,16 @@ public class EventControllerSpring {
 		List<EventBean> event = EventService.queryall();
 		m.addAttribute("events", event);
 		return 	"event/Event";
+	}
+	
+
+	@RequestMapping(path={"/member.queryallevent.controller"}, method = {RequestMethod.POST,RequestMethod.GET})
+	public String memberListEvents(Model m) {
+			List<EventBean> event = EventService.queryall();
+			m.addAttribute("events", event);
+
+
+		return 	"event/memberevent";
 	}
 	
 	//查詢單一活動，點閱+1
@@ -68,7 +81,8 @@ public class EventControllerSpring {
 		}else {
 			eventbean.setEventPicture(imageData);
 		}
-		MockMemberBean member = MockMemberService.query((long) 1);
+		System.out.println("123");
+		MockMemberBean member = MockMemberService.query((long)1);
 		eventbean.setHostmember(member);
 		eventbean.setEventName((String)(request.getParameter("eventname")));
 		eventbean.setEventStartTime(Timestamp.valueOf(request.getParameter("eventstartdate")+" "+request.getParameter("eventstarttime")+":01")); //處理Timestamp
@@ -78,6 +92,7 @@ public class EventControllerSpring {
 		eventbean.setEventMaxLimit(Integer.parseInt(request.getParameter("eventmaxlimit")));
 		eventbean.setEventFee(Integer.parseInt(request.getParameter("eventfee")));
 		eventbean.setEventStatus(Boolean.valueOf(request.getParameter("eventstatus")));
+		eventbean.setEventClick(0);
 		eventbean.setEventDescription((String)(request.getParameter("eventdescription")));		
 		
 		EventService.insert(eventbean);
@@ -173,7 +188,7 @@ public class EventControllerSpring {
 					return  new ResponseEntity<>("重複參加活動", HttpStatus.BAD_REQUEST);
 				}
 			}		
-			member.getEvents().addAll(Arrays.asList(memberevent));
+			member.getEvents().addAll(Arrays.asList(memberevent));  // member是父方
 			MockMemberService.save(member);
 		}else {
 		}
