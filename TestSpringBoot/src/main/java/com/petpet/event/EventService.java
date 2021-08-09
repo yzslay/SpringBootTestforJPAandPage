@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,27 +22,21 @@ public class EventService implements IEventService {
 	@Autowired
 	private EventRepository eventRepository;
 
-	
-
 	@Override
 	public List<EventBean> queryall() {
 		return eventRepository.findAll();
 
 	}
 	
-	@Override
-	public List<EventBean> queryallpage() {
-        int page = 1; //page:当前页的索引。注意索引都是从 0 开始的。
-        int size = 5;// size:每页显示 3 条数据
-		PageRequest pageable= PageRequest.of(page, size,Sort.by("eventFee"));
-		Page<EventBean> p = this.eventRepository.findAll(pageable);
-
-		 System.out.println("Total page："+p.getTotalElements());
-	     System.out.println("总页数："+p.getTotalPages());
-	     List<EventBean> list = p.getContent();
-		return list;
-
-	}
+	
+	public Page<EventBean> memberQueryAllPage(int pageNum, String sortField, String sortDir){
+		int pageSize = 10;
+		Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
+				  sortDir.equals("asc") ? Sort.by(sortField).ascending()
+                          : Sort.by(sortField).descending()
+                          );//因為由0開始
+		return eventRepository.findAll(pageable);
+	};
 	
 	@Override
 	public EventBean query(int eventid){

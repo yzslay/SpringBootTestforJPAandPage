@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -45,14 +46,28 @@ public class EventControllerSpring {
 	}
 	
 
-	@RequestMapping(path={"/member.queryallevent.controller"}, method = {RequestMethod.POST,RequestMethod.GET})
-	public String memberListEvents(Model m) {
-			List<EventBean> event = EventService.queryall();
-			m.addAttribute("events", event);
-
+	@RequestMapping(path={"/member.queryallevent.controller/page/{pageNum}"}, method = {RequestMethod.POST,RequestMethod.GET})
+	public String memberListEvents(Model m,@PathVariable(name = "pageNum") int pageNum,
+			 @Param("sortField") String sortField,
+		     @Param("sortDir") String sortDir )  {
+		
+			Page<EventBean> page = EventService.memberQueryAllPage(pageNum, sortField, sortDir);
+			List<EventBean> listProducts = page.getContent();			
+		    m.addAttribute("currentPage", pageNum);
+		    m.addAttribute("totalPages", page.getTotalPages());
+		    m.addAttribute("totalItems", page.getTotalElements());	
+		    
+		    m.addAttribute("sortField", sortField);
+		    m.addAttribute("sortDir", sortDir);
+			m.addAttribute("events", listProducts);
 
 		return 	"event/memberevent";
 	}
+	
+	@RequestMapping(path={"/event"}, method = {RequestMethod.POST,RequestMethod.GET})
+	public String memberviewHomepage(Model m,String sortField, String sortDir) {
+		return memberListEvents(m,1, "eventID", "asc");
+	}//預設排序跟順序
 	
 	//查詢單一活動，點閱+1
 	@RequestMapping(path="/queryevent.controller", method = RequestMethod.GET)

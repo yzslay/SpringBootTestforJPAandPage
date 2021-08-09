@@ -68,7 +68,7 @@ pageEncoding="UTF-8" import="java.util.* "%>
     <nav>
       <ul>
         <li>
-          <a href="queryallevent.controller" class="href">查詢所有活動</a>
+          <a href="${pageContext.request.contextPath}/queryallevent.controller" class="href">查詢所有活動</a>
         </li>
         <li><a href="createeevent.url" class="href">新增活動</a></li>
         <li><a href="about" class="href">about</a></li>
@@ -90,41 +90,105 @@ pageEncoding="UTF-8" import="java.util.* "%>
           ><i class="fa fa-search" aria-hidden="true"></i>
           <span>查詢建立活動</span></a
         >
-        <select style="margin-left: 30px">
-          <option>請選擇你喜歡的活動類型</option>
-          <option>交友</option>
-          <option>聚餐</option>
-          <option>散步</option>
+        <select id="sort" style="margin-left: 30px">
+          <option value="eventName">排序方法</option>
+          <option value="eventName">活動名稱</option>
+          <option value="eventStartTime">活動時間</option>
+        </select>
+        <select id="sortdict" style="margin-left: 30px">
+          <option value="asc">排序方向</option>
+          <option value="asc">asc</option>
+          <option value="desc">desc</option>
         </select>
       </div>
 
       <c:set var="count" value="0" scope="page" />
       <div class="card-deck" style="margin: 0.5em 0;">
-      <c:forEach items="${events}" var="event" varStatus="s">
-        
-        <c:if test="${count%4==0}">
-          <div class="card-deck"  style="margin: 0.5em 0">
-        </c:if>
-            <div class="card" style="width: 400px">
-              <img class="card-img-top" src="${pageContext.request.contextPath}/event/display/${event.eventID}" alt="Card image" />
-              <div class="card-body">
-                <h4 class="card-title">${event.eventName} </h4>
-                <p class="card-text">${event.eventType}</p>
-                <p class="card-text"><fmt:formatDate pattern="yyyy-MM-dd aa HH:mm" value='${event.eventStartTime}'/></p>
-                <a
-                  href="https://www.google.com/"
-                  class="btn btn-primary stretched-link"
-                  >See Profile</a
-                >
-                <a href="https://www.yahoo.com/" class="btn btn-success">See MOO</a>
-              </div>
-            </div>
-        <c:if test="${count%4==3}">
-        </div> 
-        </c:if>
-        <c:set var="count" value="${count + 1}" scope="page"/>
-      </c:forEach>
+          <c:forEach items="${events}" var="event" varStatus="s">
+            
+            <c:if test="${count%3==0}">
+              <div class="card-deck"  style="margin: 0.5em 0">
+            </c:if>
+                <div class="card" style="width: 400px">
+                  <img class="card-img-top" src="${pageContext.request.contextPath}/event/display/${event.eventID}" alt="Card image" />
+                  <div class="card-body">
+                    <h4 class="card-title">${event.eventName} </h4>
+                    <p class="card-text">${event.eventType}</p>
+                    <p class="card-text"><fmt:formatDate pattern="yyyy-MM-dd aa HH:mm" value='${event.eventStartTime}'/></p>
+                    <a
+                      href="/petpet/queryevent.controller?eventid=${event.eventID}"
+                      class="btn btn-primary stretched-link"
+                      >See Profile</a
+                    >
+                    <a href="https://www.yahoo.com/" class="btn btn-success">See MOO</a>
+                  </div>
+                </div>
+            <c:if test="${count%3==2}">
+              </div> 
+            </c:if>
+            <c:set var="count" value="${count + 1}" scope="page"/>
+            </c:forEach>
      </div>
+     <!-- 頁面  -->
+     <div class="container">
+          <ul class="pagination">
+            <c:if test="${currentPage > 1}">
+            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/member.queryallevent.controller/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}">前一頁</a></li>
+            </c:if>
+            
+            <c:if test="${currentPage > 1}">
+              <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/member.queryallevent.controller/page/1?sortField=${sortField}&sortDir=${sortDir}">1</a></li>
+            </c:if>
+            <c:if test="${currentPage == 1}">
+              <li class="page-item"><a class="page-link" >1</a></li>
+            </c:if>
+
+            <c:forEach var="i" begin="2" end="${totalPages}">
+
+              <c:if test="${currentPage != i}">
+                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/member.queryallevent.controller/page/${i}?sortField=${sortField}&sortDir=${sortDir}"">${i}</a></li>
+              </c:if>
+              <c:if test="${currentPage == i}">
+                <li class="page-item"><a class="page-link" >${i}</a></li>
+              </c:if>
+            </c:forEach>
+            
+          <c:if test="${currentPage < totalPages}">
+            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/member.queryallevent.controller/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}"">下一頁</a></li>
+          </c:if>
+          <c:if test="${currentPage == i}">
+            <li class="page-item"><a class="page-link">下一頁</a></li>
+          </c:if>
+
+          <c:if test="${currentPage < totalPages}">
+            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/member.queryallevent.controller/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}"">最後一頁</a></li>
+          </c:if>
+          <c:if test="${currentPage == totalPages}">
+            <li class="page-item"><a class="page-link">最後一頁</a></li>
+          </c:if>
+        </ul>
+      </div>
     </div>
   </body>
+
+  <script>
+$(document).ready(function() {
+  $('#sort').change("click", function() {
+    var sorting = $('#sort').val();
+    var sortdict = $('#sortdict').val();
+    console.log(sorting);
+    window.location.href="${pageContext.request.contextPath}/member.queryallevent.controller/page/${currentPage}?sortField="+sorting+"&sortDir="+sortdict;
+  })  
+  $('#sortdict').change("click", function() {
+    var sorting = $('#sort').val();
+    var sortdict = $('#sortdict').val();
+    console.log(sortdict);
+    window.location.href="${pageContext.request.contextPath}/member.queryallevent.controller/page/${currentPage}?sortField="+sorting+"&sortDir="+sortdict;
+  })
+
+
+
+})
+
+  </script>
 </html>
