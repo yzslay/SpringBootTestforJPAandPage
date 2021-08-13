@@ -62,6 +62,9 @@ pageEncoding="UTF-8" import="java.util.* "%>
       margin-top: 30px;
       margin-bottom: 30px;
     }
+    .imgheigh{
+      max-height: 400px;
+    }
   </style>
 
   <body>
@@ -110,7 +113,7 @@ pageEncoding="UTF-8" import="java.util.* "%>
               <div class="card-deck"  style="margin: 0.5em 0">
             </c:if>
                 <div class="card" style="width: 400px">
-                  <img class="card-img-top" src="${pageContext.request.contextPath}/event/display/${event.eventID}" alt="Card image" />
+                  <img class="card-img-top  imgheigh" src="${pageContext.request.contextPath}/event/display/${event.eventID}" alt="Card image" />
                   <div class="card-body">
                     <h4 class="card-title">${event.eventName} </h4>
                     <p class="card-text">${event.eventType}</p>

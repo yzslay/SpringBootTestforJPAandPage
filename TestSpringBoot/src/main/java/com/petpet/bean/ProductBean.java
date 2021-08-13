@@ -11,6 +11,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +24,9 @@ import lombok.ToString;
 @Getter
 @Entity
 @Table(name = "product")
-public class ProductBean {
+public class ProductBean implements java.io.Serializable {
+	@Transient //無視
+	private static final long serialVersionUID = 1L;
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "productid")

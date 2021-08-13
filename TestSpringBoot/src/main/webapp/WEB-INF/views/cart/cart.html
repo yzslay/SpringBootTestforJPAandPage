@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="PRAGMA" content="NO-CACHE" />
+    <meta http-equiv="EXPIRES" content="0" />
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE" />
+    <title>Shopping Cart</title>
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <style>
+    .product{
+      max-width: 150px;
+    }
+    
+.container.custom-container-width {
+    max-width: 1500px;      
+}
+
+  </style>
+  </head>
+  <body>
+    <div class="container custom-container-width">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#"
+                >Home <span class="sr-only">(current)</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+          </ul>
+
+          <form class="form-inline">
+            <input
+              class="form-control mr-sm-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </nav>
+      <!-- 商品列 -->
+      <div class="row m-1 ">
+        <!-- 九格分給商品陳列 -->
+        <div class="col-sm-9">
+         <!-- 商品的那一列 迴圈-->
+          <div class="row border rounder p-1 align-items-center">
+            <!-- 商品項次的1格 -->
+            <div class="col-sm-1">
+              1 
+              <div>
+                  <a class="" href=""><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a>
+              </div>
+              <span>垃圾桶</span>
+            </div>
+            <!-- 圖片那一欄佔兩格 -->
+            <div class="col-sm-2">
+              <span>圖片</span>
+              <img class="product" src="/TestSpringBoot/src/main/resources/static/image/cat1.png" alt="商品圖片" / >
+            </div>
+            <!-- 商品占六格 -->
+            <div class="col-sm-4">
+              <div>
+                <a href="#"><b>產品名稱</b></a>
+              </div>
+              <div class="row m-1">
+                &nbsp;
+                </div>
+              <div class="row m-1">
+                &nbsp;
+                </div>
+              <div class="row m-1">
+                &nbsp;
+                </div>
+              <div>商品價格 599</div>
+              <div>商品小計(暫定)599</div>
+              <div class="row m-1">
+              &nbsp;
+              </div>
+              
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+              <div class="input-group mb-3 ">
+                  <div class="input-group-prepend">
+                      <button class="btn btn-dark btn-sm" id="minus-btn"><i class="fa fa-minus"></i></button>
+                  </div>
+                  <input type="number" id="qty_input" class="form-control form-control-sm" value="1" min="1">
+                  <div class="input-group-prepend">
+                      <button class="btn btn-dark btn-sm" id="plus-btn"><i class="fa fa-plus"></i></button>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- 迴圈商品結束 -->
+        </div>   
+              <div class="col-sm-3  border rounder justify-content-right">
+                  <span class="h3"> 結帳金額</span>
+              </div> 
+      <!--整個商品結束在這  -->
+      </div>
+
+      </div>
+        
+    
+  </body>
+  <script>
+  $(document).ready(function(){
+    $('#qty_input').prop('disabled', true);
+    $('#plus-btn').click(function(){
+    	$('#qty_input').val(parseInt($('#qty_input').val()) + 1 );
+    	    });
+        $('#minus-btn').click(function(){
+    	$('#qty_input').val(parseInt($('#qty_input').val()) - 1 );
+    	if ($('#qty_input').val() == 0) {
+			$('#qty_input').val(1);
+		}
+    	    });
+ });
+</script>
+</html>

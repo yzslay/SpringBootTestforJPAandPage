@@ -30,7 +30,7 @@ public class EventService implements IEventService {
 	
 	
 	public Page<EventBean> memberQueryAllPage(int pageNum, String sortField, String sortDir){
-		int pageSize = 10;
+		int pageSize = 9;
 		Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
 				  sortDir.equals("asc") ? Sort.by(sortField).ascending()
                           : Sort.by(sortField).descending()

@@ -31,8 +31,19 @@ public class MockMemberBean implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="memberid")
     private Long memberId;
+	
+
+	@Column(name="address" )
+	private String address;
+	
  	public Long getMemberId() {
 		return memberId;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public void setMemberId(Long memberId) {
 		this.memberId = memberId;

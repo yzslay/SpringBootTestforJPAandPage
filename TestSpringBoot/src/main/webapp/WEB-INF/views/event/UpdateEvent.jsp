@@ -237,13 +237,14 @@ footer{
      </form>
 	 <div id="success" class="text-center" style="color:green;"></div>
 	 <div id="error" class="text-center" style="color:red;"></div>
+			</div>
+		</div>
     </div>
+	共被點選${event.eventClick}次
 </div>
-共被點選${event.eventClick}次
-<footer>
-	第八組-蕭詠謙
-</footer>
-    
+
+
+
 </body>
 <script>
 
