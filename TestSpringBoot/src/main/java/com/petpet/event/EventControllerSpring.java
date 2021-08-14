@@ -140,7 +140,7 @@ public class EventControllerSpring {
 		return new ResponseEntity<>("刪除成功", HttpStatus.OK);
 	}
 
-//修改Event，之後修改參數...現在太亂了
+//修改Event，之後修改參數...現在太亂
 	@RequestMapping(path="/modifyevent.controller", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?>  updateEvent(HttpServletRequest request, Model m, final @RequestParam("image") MultipartFile file) throws IOException {
 	
