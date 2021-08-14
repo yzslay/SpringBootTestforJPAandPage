@@ -136,7 +136,7 @@ public class EventControllerSpring {
 		int eventid =Integer.parseInt(request.getParameter("eventid"));
 		EventBean eventbean = EventService.delete(eventid);
 //		m.addAttribute("event",eventbean);
-//      
+//      MOO換Eclipse
 		return new ResponseEntity<>("刪除成功", HttpStatus.OK);
 	}
 
