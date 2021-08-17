@@ -88,49 +88,49 @@ pageEncoding="UTF-8" import="java.util.* "%>
       <div id="home" class="container tab-pane active"><br>
         <form>
             <div class="form-group row">
-                <lavel class="col-sm-2 col-form-label">訂單ID</lavel>
+                <label class="col-sm-2 col-form-label">訂單ID</label>
                 <div class="col-sm-10">
                     <input type="text" readonly class="form-control" value=${order.id}>
                 </div>
             </div>
             <div class="form-group row">
-                <lavel class="col-sm-2 col-form-label">顧客名稱</lavel>
+                <label class="col-sm-2 col-form-label">顧客名稱</label>
                 <div class="col-sm-10">
                     <input type="text" readonly class="form-control" value=${order.membername}>
                 </div>
             </div>
             <div class="form-group row">
-                <lavel class="col-sm-2 col-form-label">商品價格</lavel>
+                <label class="col-sm-2 col-form-label">商品價格</label>
                 <div class="col-sm-10">
                     <input type="text" readonly class="form-control" value=${order.productCost}>
                 </div>
             </div>
             <div class="form-group row">
-                <lavel class="col-sm-2 col-form-label">運費價格</lavel>
+                <label class="col-sm-2 col-form-label">運費價格</label>
                 <div class="col-sm-10">
                     <input type="text" readonly class="form-control" value=${order.shippongCost}>
                 </div>
             </div>
             <div class="form-group row">
-                <lavel class="col-sm-2 col-form-label">稅額</lavel>
+                <label class="col-sm-2 col-form-label">稅額</label>
                 <div class="col-sm-10">
                     <input type="text" readonly class="form-control" value=${order.tax}>
                 </div>
             </div>
             <div class="form-group row">
-                <lavel class="col-sm-2 col-form-label">總價</lavel>
+                <label class="col-sm-2 col-form-label">總價</label>
                 <div class="col-sm-10">
                     <input type="text" readonly class="form-control" value=${order.total}>
                 </div>
             </div>
             <div class="form-group row">
-                <lavel class="col-sm-2 col-form-label">付款方式</lavel>
+                <label class="col-sm-2 col-form-label">付款方式</label>
                 <div class="col-sm-10">
                     <input type="text" readonly class="form-control" value=${order.paymentMethod}>
                 </div>
             </div>
             <div class="form-group row">
-                <lavel class="col-sm-2 col-form-label">訂單日期</lavel>
+                <label class="col-sm-2 col-form-label">訂單日期</label>
                 <div class="col-sm-10">
                     <input type="text" readonly class="form-control" value=${order.ordertime}>
                 </div>

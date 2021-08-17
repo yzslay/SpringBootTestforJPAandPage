@@ -1,4 +1,4 @@
-package com.petpet.bean;
+package com.petpet.event.model;
 
 import java.sql.Timestamp;
 
@@ -23,12 +23,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.petpet.bean.MockMemberBean;
 
 @Entity
 @Table(name="event")
-@Component("eventbean")
+@Component("event")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,	property = "eventID")
-public class EventBean implements java.io.Serializable {
+public class Event implements java.io.Serializable {
 	
 	@Transient //無視
 	private static final long serialVersionUID = 1L;

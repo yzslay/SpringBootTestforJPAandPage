@@ -97,7 +97,7 @@ footer{
 	<fmt:setLocale value="en" /> 
 <div class="container anchor  custom-container-width">
 	<!-- 表格從這開始 -->
-    <form  id="form" name="submitselection">  
+    <form  action="/addevent.controller" method="post"">  
     	 <input type="hidden"  readonly name="eventid" value="${event.eventID}" />
 		 <input type="hidden"  readonly name="eventclick" value="${event.eventClick}" />
 

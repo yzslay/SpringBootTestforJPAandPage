@@ -1,4 +1,4 @@
-package com.petpet.event;
+package com.petpet.event.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.petpet.bean.EventBean;
+import com.petpet.event.IMockMemberService;
+import com.petpet.event.model.Event;
+import com.petpet.event.service.IEventService;
 import com.petpet.bean.MockMemberBean;
 
 @Controller
@@ -25,8 +27,8 @@ public class EventRestController {
 	
 	@RequestMapping(path={"/queryallevent.rest",}, method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
-	public List<EventBean>   listAllEvents(Model m) {
-		List<EventBean> event = EventService.queryall();
+	public List<Event>   listAllEvents(Model m) {
+		List<Event> event = EventService.queryall();
 		m.addAttribute("events", event);
 		return  event	;
 	}

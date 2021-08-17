@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.petpet.bean.OrderBean;
 import com.petpet.upload.ProductService;
+
+import lombok.experimental.PackagePrivate;
 
 @Controller
 public class OrderController {
@@ -39,12 +42,37 @@ public class OrderController {
 	}
 	
 	
+	@RequestMapping(path={"/ecpay"}, method = {RequestMethod.POST,RequestMethod.GET})
+	public String fakeEcpay(Model m,String sortField, String sortDir) {
+		
+		return "order/ecpay";
+	}
+	
+	@PostMapping ("/ecpaytest")
+	public @ResponseBody ResponseEntity<?>  ecpaypostreceive(@RequestParam(name = "CheckMacValue") String checkMacValue,
+			@RequestParam(name = "PaymentDate") String paymentDate,		
+			@RequestParam(name = "PaymentType") String paymentType,
+			@RequestParam(name = "RtnMsg") String rtnMsg,
+			@RequestParam(name = "RtnCode") String rtnCode,
+			@RequestParam(name = "TradeAmt") String tradeAmt,
+			@RequestParam(name = "TradeDate") String tradeDate,
+			@RequestParam(name = "TradeNo") String tradeNo,
+			Model m ) {
+		if (rtnCode.equals("1")) {
+			System.out.println("交易成功");
+		}
+		System.out.println(checkMacValue);
+		
+		return new ResponseEntity<>("新增訂單", HttpStatus.OK);
+	}
+	
+	
+	
+	
 	@RequestMapping(path={"/listorder"}, method = {RequestMethod.POST,RequestMethod.GET})
 	public String memberviewHomepage(Model m,String sortField, String sortDir) {
 		return orderListEvents(m,1, "id", "asc");
 	}//預設排序跟順序
-	
-	
 	@RequestMapping(path={"/order.queryallevent.controller/page/{pageNum}"}, method = {RequestMethod.POST,RequestMethod.GET})
 	public String orderListEvents(Model m,@PathVariable(name = "pageNum") int pageNum,
 			 @Param("sortField") String sortField,

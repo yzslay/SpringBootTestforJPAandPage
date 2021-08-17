@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.petpet.bean.MockMemberBean;
+import com.petpet.event.repository.EventRepository;
 
 
 

@@ -1,4 +1,4 @@
-package com.petpet.event;
+package com.petpet.event.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -25,8 +25,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.petpet.bean.EventBean;
+
 import com.petpet.bean.MockMemberBean;
+import com.petpet.event.IMockMemberService;
+import com.petpet.event.model.Event;
+import com.petpet.event.service.IEventService;
 
 @Controller
 public class EventControllerSpring {
@@ -40,7 +43,7 @@ public class EventControllerSpring {
 	// 一開始查詢所有的
 	@RequestMapping(path={"/queryallevent.controller","/"}, method = {RequestMethod.POST,RequestMethod.GET})
 	public String listAllEvents(Model m) {
-		List<EventBean> event = EventService.queryall();
+		List<Event> event = EventService.queryall();
 		m.addAttribute("events", event);
 		return 	"event/Event";
 	}
@@ -51,8 +54,8 @@ public class EventControllerSpring {
 			 @Param("sortField") String sortField,
 		     @Param("sortDir") String sortDir )  {
 		
-			Page<EventBean> page = EventService.memberQueryAllPage(pageNum, sortField, sortDir);
-			List<EventBean> listProducts = page.getContent();			
+			Page<Event> page = EventService.memberQueryAllPage(pageNum, sortField, sortDir);
+			List<Event> listProducts = page.getContent();			
 		    m.addAttribute("currentPage", pageNum);
 		    m.addAttribute("totalPages", page.getTotalPages());
 		    m.addAttribute("totalItems", page.getTotalElements());	
@@ -62,6 +65,12 @@ public class EventControllerSpring {
 			m.addAttribute("events", listProducts);
 
 		return 	"event/memberevent";
+	}
+	
+	@RequestMapping(path={"/member.addevent.controller"}, method = {RequestMethod.POST,RequestMethod.GET})
+	public String memberAddEvent(Model m)  {
+	
+		return 	"event/memberaddevent";
 	}
 	
 	@RequestMapping(path={"/event"}, method = {RequestMethod.POST,RequestMethod.GET})
@@ -75,9 +84,9 @@ public class EventControllerSpring {
 		if ( eventid == (-1) ) {
 			
 		}else {
-		EventBean event = EventService.query(eventid);	
+		Event event = EventService.query(eventid);	
 		event.setEventClick(event.getEventClick()+1);
-		EventBean modifyeventbean = EventService.update(event);	
+		Event modifyeventbean = EventService.update(event);	
 		m.addAttribute("event", modifyeventbean);
 		System.out.println("MOO");
 		return 	"event/UpdateEvent";
@@ -90,7 +99,7 @@ public class EventControllerSpring {
 		//有空Rewrite
 	try {
 		byte[] imageData = file.getBytes();		
-		EventBean eventbean = new EventBean();		
+		Event eventbean = new Event();		
 		if(file.isEmpty()) {
 			eventbean.setEventPicture(null);		
 		}else {
@@ -122,7 +131,7 @@ public class EventControllerSpring {
 	//圖片SRC直接輸出到網頁上
 	@GetMapping("/event/display/{id}")  // 用來匯出資料庫的圖片
 	@ResponseBody
-	public void showEventImage(@PathVariable("id") int id, HttpServletResponse response, EventBean Event) throws ServletException, IOException {
+	public void showEventImage(@PathVariable("id") int id, HttpServletResponse response, Event Event) throws ServletException, IOException {
 
 		Event = EventService.query(id);
 		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
@@ -134,7 +143,7 @@ public class EventControllerSpring {
 	@RequestMapping(path="/deleteevent.controller", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?>  deleteEvent(HttpServletRequest request, Model m) {
 		int eventid =Integer.parseInt(request.getParameter("eventid"));
-		EventBean eventbean = EventService.delete(eventid);
+		Event eventbean = EventService.delete(eventid);
 //		m.addAttribute("event",eventbean);
 //      MOO換Eclipsegit@github.comgit@github.comgit@github.com
 		return new ResponseEntity<>("刪除成功", HttpStatus.OK);
@@ -145,7 +154,7 @@ public class EventControllerSpring {
 	public @ResponseBody ResponseEntity<?>  updateEvent(HttpServletRequest request, Model m, final @RequestParam("image") MultipartFile file) throws IOException {
 	
 	try {
-		EventBean eventbean = EventService.query(Integer.parseInt(request.getParameter("eventid")));			
+		Event eventbean = EventService.query(Integer.parseInt(request.getParameter("eventid")));			
 		byte[] imageData = file.getBytes();		
 	
 		if(file.isEmpty()) {
@@ -165,7 +174,7 @@ public class EventControllerSpring {
 		eventbean.setEventStatus(Boolean.valueOf(request.getParameter("eventstatus")));
 		eventbean.setEventDescription((String)(request.getParameter("eventdescription")));		
 		eventbean.setEventClick(Integer.parseInt(request.getParameter("eventclick")));
-		EventBean modifyeventbean = EventService.update(eventbean);
+		Event modifyeventbean = EventService.update(eventbean);
 //		m.addAttribute("event",modifyeventbean);
 // 目前不用回傳Bean
 		return new ResponseEntity<>("Product Saved With File - ", HttpStatus.OK);
@@ -193,10 +202,10 @@ public class EventControllerSpring {
 		eventid= Integer.parseInt(request.getParameter("eventid"));
 		memberid= Long.parseLong(request.getParameter("memberid"));
 		if ( EventService.query(eventid) != null ){		
-			EventBean memberevent = EventService.query(eventid);
+			Event memberevent = EventService.query(eventid);
 			MockMemberBean member = MockMemberService.query(memberid);
 			
-			List<EventBean> listbean= member.getEvents();
+			List<Event> listbean= member.getEvents();
 			
 			for (int i = 0; i < listbean.size(); i++) {
 				if ((listbean.get(i).getEventID()) ==  memberevent.getEventID()){
@@ -218,7 +227,7 @@ public class EventControllerSpring {
 		eventid= Integer.parseInt(request.getParameter("eventid"));
 		memberid= Long.parseLong(request.getParameter("memberid"));
 		if ( EventService.query(eventid) != null ){		
-			EventBean memberevent = EventService.query(eventid);
+			Event memberevent = EventService.query(eventid);
 			MockMemberBean member = MockMemberService.query(memberid);
 			member.getEvents().remove(memberevent);
 			memberevent.getMembers().remove(member);

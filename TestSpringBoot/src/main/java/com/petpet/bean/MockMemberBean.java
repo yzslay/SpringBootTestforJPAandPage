@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.petpet.event.model.Event;
 
 
 @Entity
@@ -58,25 +59,25 @@ public class MockMemberBean implements java.io.Serializable {
     private String userName;
  	
  	
- 	@ManyToMany(targetEntity = EventBean.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
- 	private List<EventBean> events = new ArrayList<EventBean>();
+ 	@ManyToMany(targetEntity = Event.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+ 	private List<Event> events = new ArrayList<Event>();
 // 多對多裡面只能操控一邊的新增刪除，一邊要有MappedBy(這邊不能寫)，另外一邊可以可以操作，這個例子是操作會員參加活動，所以Event那邊寫Map
 // 由於在會員這邊的一個會員可以對應到多筆Member，所以這邊要列Arraylist或是Set(不重複)，凱文你給我去用Set+欄位
  	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "hostmember")
-	private List<EventBean> hostevent;
+	private List<Event> hostevent;
  	
  	
-	 public List<EventBean> getHostevent() {
+	 public List<Event> getHostevent() {
 		return hostevent;
 	}
-	public void setHostevent(List<EventBean> hostevent) {
+	public void setHostevent(List<Event> hostevent) {
 		this.hostevent = hostevent;
 	}
-	public List<EventBean> getEvents() {
+	public List<Event> getEvents() {
 	        return events;
 	    }
-	 public void setEvents(List<EventBean> events) {
+	 public void setEvents(List<Event> events) {
 	        this.events = events;
 	    }
 	 

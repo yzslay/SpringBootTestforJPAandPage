@@ -10,8 +10,8 @@
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/backstage/backstage.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/backstage/backstagemevent.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/event/css/backstage/backstage.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/event/css/backstage/backstagemevent.css"/>
 <!-- Bootstrap Table with Search Column Feature -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">

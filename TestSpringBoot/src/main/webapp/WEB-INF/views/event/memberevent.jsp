@@ -13,6 +13,9 @@ pageEncoding="UTF-8" import="java.util.* "%>
   <META HTTP-EQUIV="EXPIRES" CONTENT="0">
   <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
     <title>會員活動卡片</title>
+    <!-- navbar -->
+    <link rel='stylesheet' href="<c:url value='/Member/css/style.css' />" type="text/css" />	
+    <script src="https://kit.fontawesome.com/c8e4d183c2.js" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified CSS -->
     <link
       rel="stylesheet"
@@ -31,7 +34,7 @@ pageEncoding="UTF-8" import="java.util.* "%>
     />
   </head>
   <style>
-    nav {
+    /* nav {
       background-color: #60ca91;
       padding: 13px;
       position: fixed;
@@ -52,11 +55,11 @@ pageEncoding="UTF-8" import="java.util.* "%>
       padding: 15px;
       font-size: 28px;
       margin: 40px;
-    }
+    } */
     .anchor::before {
       content: "";
       display: block;
-      height: 70px;
+      height: 20px;
     }
     .eventmargin {
       margin-top: 30px;
@@ -67,21 +70,84 @@ pageEncoding="UTF-8" import="java.util.* "%>
     }
   </style>
 
-  <body>
+<body background="<c:url value='/Member/images/petBackground.jpg' />" style="background-repeat:no-repeat;">
+    <!--navigation-------------------------------->
     <nav>
-      <ul>
-        <li>
-          <a href="${pageContext.request.contextPath}/queryallevent.controller" class="href">查詢所有活動</a>
-        </li>
-        <li><a href="createeevent.url" class="href">新增活動</a></li>
-        <li><a href="about" class="href">about</a></li>
-      </ul>
+        <!--social-link-and-phont-number-->
+        <div class="social-call">
+            <!--social-links-->
+            <div class="social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <!--phone-number-->
+            <div class="phone">
+                <span>Call +123456789</span>
+            </div>
+        </div>
+
+        <!--menu-bar-------------------------------------->
+        <div class="navigation">
+            <!--logo---------->
+            <a href="<c:url value='/index' />" class="logo">
+                <img src="<c:url value='/Member/images/PetPetLogo.png' />" />
+            </a>
+            <!--menu-icon---------------------->
+            <div class="toggle"></div>
+
+            <!--menu----------->
+            <ul class="menu">
+                <li><a href="#">最新消息</a></li>
+
+                <li><a href="#">商品總覽</a>
+                    <!--sale-label-->
+                    <span class="sale-lable">Sale</span>
+                </li>
+
+                <li><a href="#">寵愛認養</a></li>
+                <li><a href="#">毛寵大小事</a></li>
+                <li><a href="#">會員中心</a></li>
+            </ul>
+            <!--right-menu------->
+            <div class="right-menu">
+                <!--search-->
+                <a href="javascript:void(0);" class="search">
+                    <i class="fas fa-search"></i>
+                </a>
+                <!--user-->
+                <a href="<c:url value='/Logout'/>" class="user">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+                <!--cart-icon-->
+                <a href="#">
+                    <i class="fas fa-shopping-cart">
+                        <!--number-of-product-in-cart-->
+                        <span class="num-cart-product">0</span>
+                    </i>
+                </a>
+            </div>
+        </div>
     </nav>
+    <!--search-bar------------------------------->
+    <div class="search-bar">
+        <!--search-input-------->
+        <div class="search-input">
+            <!--input----->
+            <input type="text" placeholder="Search For Product" />
+            <!--cancel-btn-->
+            <a href="javascript:void(0);" class="search-cancel">
+                <i class="fas fa-times"></i>
+            </a>
+        </div>
+    </div>
+
 
     <div class="anchor container">
       <div class="container-fluid d-flex justify-content-end eventmargin">
         <a
-          href="${pageContext.request.contextPath}/queryevent.controller?eventid=-1"
+          href="${pageContext.request.contextPath}/member.addevent.controller"
           class="btn btn-success"
           ><i class="fa fa-pencil-square-o" aria-hidden="true"></i
           ><span>新增活動</span></a
@@ -121,9 +187,9 @@ pageEncoding="UTF-8" import="java.util.* "%>
                     <a
                       href="/petpet/queryevent.controller?eventid=${event.eventID}"
                       class="btn btn-primary stretched-link"
-                      >See Profile</a
+                      >加入活動</a
                     >
-                    <a href="https://www.yahoo.com/" class="btn btn-success">See MOO</a>
+                    <a href="https://www.yahoo.com/" class="btn btn-success">活動詳情</a>
                   </div>
                 </div>
             <c:if test="${count%3==2}">

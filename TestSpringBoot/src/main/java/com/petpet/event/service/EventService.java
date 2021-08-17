@@ -1,4 +1,4 @@
-package com.petpet.event;
+package com.petpet.event.service;
 
 import java.util.List;
 
@@ -10,8 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.petpet.event.model.Event;
+import com.petpet.event.repository.EventRepository;
 
-import com.petpet.bean.EventBean;
+
 
 
 @Service("EventService")
@@ -23,13 +25,13 @@ public class EventService implements IEventService {
 	private EventRepository eventRepository;
 
 	@Override
-	public List<EventBean> queryall() {
+	public List<Event> queryall() {
 		return eventRepository.findAll();
 
 	}
 	
 	
-	public Page<EventBean> memberQueryAllPage(int pageNum, String sortField, String sortDir){
+	public Page<Event> memberQueryAllPage(int pageNum, String sortField, String sortDir){
 		int pageSize = 9;
 		Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
 				  sortDir.equals("asc") ? Sort.by(sortField).ascending()
@@ -39,27 +41,27 @@ public class EventService implements IEventService {
 	};
 	
 	@Override
-	public EventBean query(int eventid){
-		EventBean eventbean = eventRepository.findById(eventid).orElse(null) ;
+	public Event query(int eventid){
+		Event eventbean = eventRepository.findById(eventid).orElse(null) ;
 		return eventbean;
 	}   	
 
 
 	
 	@Override
-	public EventBean insert(EventBean eventbean)  {
+	public Event insert(Event eventbean)  {
 		return eventRepository.save(eventbean);
 		
 
 	}
 	@Override
-	public EventBean update(EventBean eventbean)  {
+	public Event update(Event eventbean)  {
 		return eventRepository.save(eventbean);
 
 	}
 	@Override
-	public EventBean delete(int eventid)  {
-		EventBean eventbean = eventRepository.findById(eventid).orElse(null);
+	public Event delete(int eventid)  {
+		Event eventbean = eventRepository.findById(eventid).orElse(null);
 		eventRepository.deleteById(eventid);
 		return eventbean;
 

@@ -196,7 +196,7 @@ footer{
 			<div class="col">
 				活動種類: <br><input type="text" class="form-control" required name="eventtype" value ="${event.eventType}"/>
 				<small  class="form-text text-muted">
-				必填欄位
+					必填欄位
 				</small>
 				<p>
 			</div>

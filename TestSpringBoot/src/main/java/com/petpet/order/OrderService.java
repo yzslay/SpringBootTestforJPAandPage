@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.petpet.bean.EventBean;
 import com.petpet.bean.MockMemberBean;
 import com.petpet.bean.OrderBean;
 import com.petpet.bean.OrderDetailBean;
